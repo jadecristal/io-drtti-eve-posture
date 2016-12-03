@@ -21,7 +21,7 @@
 
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>${parent.artifactId}-ejb</artifactId>
+            <artifactId>${project.parent.artifactId}-ejb</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
@@ -35,7 +35,7 @@
                 <configuration>
                     <archive>
                         <manifestEntries>
-                            <Class-Path>${parent.artifactId}-ejb-${project.version}.jar</Class-Path>
+                            <Class-Path>${project.parent.artifactId}-ejb-${project.version}.jar</Class-Path>
                         </manifestEntries>
                     </archive>
                 </configuration>

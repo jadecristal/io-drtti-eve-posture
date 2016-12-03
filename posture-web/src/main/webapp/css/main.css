@@ -1,0 +1,40 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.f-center {
+    width: 768px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.f-corner {
+    margin: 0.2em;
+    position: fixed;
+    font-family: 'GFS Didot', 'Tinos', serif;
+    font-size: 3em;
+}
+
+.h-main {
+    margin: 0.2em;
+    font-family: 'Tangerine', serif;
+    font-size: 4em;
+    text-align: center;
+}
+
+.t-center {
+    text-align: center;
+}
+
+.a {
+    left: 0;
+    top: 0;
+    line-height: 0.5;
+}
+
+.o {
+    right: 0;
+    bottom: 0;
+    line-height: 0.75;
+}

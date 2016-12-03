@@ -21,7 +21,7 @@
 
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>${parent.artifactId}-dom</artifactId>
+            <artifactId>${project.parent.artifactId}-dom</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
