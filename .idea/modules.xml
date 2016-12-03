@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/posture.iml" filepath="$PROJECT_DIR$/posture.iml" />
+      <module fileurl="file://$PROJECT_DIR$/posture-dom/posture-dom.iml" filepath="$PROJECT_DIR$/posture-dom/posture-dom.iml" />
+      <module fileurl="file://$PROJECT_DIR$/posture-ear/posture-ear.iml" filepath="$PROJECT_DIR$/posture-ear/posture-ear.iml" />
+      <module fileurl="file://$PROJECT_DIR$/posture-ejb/posture-ejb.iml" filepath="$PROJECT_DIR$/posture-ejb/posture-ejb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/posture-web/posture-web.iml" filepath="$PROJECT_DIR$/posture-web/posture-web.iml" />
+    </modules>
+  </component>
+</project>

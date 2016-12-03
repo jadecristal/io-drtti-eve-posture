@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="ejb-jar" name="posture-ejb:ejb">
+    <output-path>$PROJECT_DIR$/posture-ejb/target</output-path>
+    <root id="archive" name="posture-ejb.jar">
+      <element id="artifact" artifact-name="posture-ejb:ejb exploded" />
+    </root>
+  </artifact>
+</component>
