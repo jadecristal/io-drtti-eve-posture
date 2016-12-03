@@ -1,4 +1,5 @@
 log/
+logs/
 doc/*/LIVE*
 
 .idea/workspace.xml

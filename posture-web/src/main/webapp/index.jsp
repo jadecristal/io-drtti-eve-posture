@@ -17,7 +17,7 @@
 </div>
 <div class="f-center">
     <p class="t-center">
-        <a href="https://login.eveonline.com/oauth/authorize/?response_type=code&redirect_uri=https://drtti.io/sso"><img src="image/ccp-eve-sso.png" /></a>
+        <a href="https://login.eveonline.com/oauth/authorize/?response_type=code&redirect_uri=https://drtti.io/ccp/eve/crest/sso/"><img src="image/ccp-eve-sso.png" /></a>
     </p>
 </div>
 </body>
