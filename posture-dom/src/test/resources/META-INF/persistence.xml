@@ -5,12 +5,18 @@
              version="2.1">
     <persistence-unit name="drtti-eve">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <jta-data-source>java:jboss/datasources/drtti_eveDS</jta-data-source>
-        <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
+        <class>io.drtti.eve.dom.core.Pilot</class>
+        <class>io.drtti.eve.dom.core.SolarSystem</class>
+        <class></class>
+
         <properties>
+            <property name="connection.driver_class" value="com.mysql.jdbc.Driver" />
+            <property name="connection.url" value="jdbc:mysql://localhost:3306/drtti_eve?useSSL=false" />
+            <property name="connection.username" value="drtti_eve" />
+            <property name="connection.password" value="DFb3kKeQauu___xz!" />
+
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL57InnoDBDialect" />
             <property name="hibernate.show_sql" value="true" />
-            <property name="hibernate.cache.use_second_level_cache" value="true"/>
         </properties>
     </persistence-unit>
 

@@ -29,7 +29,7 @@
             </Layout>
         </Appender>
 
-        <Appender type="File" name="LOGS_WILDFLY" fileName="${logs.wildfly}/${logs.filename}">
+        <!--<Appender type="File" name="LOGS_WILDFLY" fileName="${logs.wildfly}/${logs.filename}">
             <Layout type="PatternLayout">
                 <Pattern>${pattern.default}</Pattern>
             </Layout>
@@ -39,7 +39,7 @@
             <Layout type="PatternLayout">
                 <Pattern>${pattern.default}</Pattern>
             </Layout>
-        </Appender>
+        </Appender>-->
     </Appenders>
 
     <!-- Set up just the root logger with main appenders.
