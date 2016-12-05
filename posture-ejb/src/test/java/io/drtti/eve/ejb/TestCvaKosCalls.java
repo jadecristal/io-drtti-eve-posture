@@ -2,6 +2,7 @@ package io.drtti.eve.ejb;
 
 import io.drtti.eve.dom.cva.*;
 
+import org.apache.log4j.Logger;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -15,6 +16,8 @@ import javax.ws.rs.core.MediaType;
  */
 public class TestCvaKosCalls {
 
+    private final static Logger log = Logger.getLogger(TestCvaKosCalls.class);
+
     @Test
     public void testUnitCvaKosCall() throws Exception {
         Client cvaKosClient = ClientBuilder.newClient();
@@ -26,7 +29,7 @@ public class TestCvaKosCalls {
 
         CvaKosResultItem kosResultItem = cvaKosResponse.getResults().get(0);
 
-        System.out.println(cvaKosMapper.writerWithDefaultPrettyPrinter().writeValueAsString(cvaKosResponse));
+        log.info(cvaKosMapper.writerWithDefaultPrettyPrinter().writeValueAsString(cvaKosResponse));
         assertEquals("CVA KOS: 'unit' Response not 'OK'", "OK", cvaKosResponse.getMessage());
         assertEquals("CVA KOS: Failed 'unit' KOS checking Cale Cloudstrike!", "Cale Cloudstrike", kosResultItem.getLabel());
     }
@@ -40,7 +43,7 @@ public class TestCvaKosCalls {
         ObjectMapper cvaKosMapper = new ObjectMapper();
         CvaKosResponse cvaKosResponse = cvaKosMapper.readValue(cvaKosResponseJson, CvaKosResponse.class);
 
-        System.out.println(cvaKosMapper.writerWithDefaultPrettyPrinter().writeValueAsString(cvaKosResponse));
+        log.info(cvaKosMapper.writerWithDefaultPrettyPrinter().writeValueAsString(cvaKosResponse));
 
         CvaKosResultItem kosResultItem = cvaKosResponse.getResults().get(1);
         assertEquals("CVA KOS: 'multi' Response not 'OK'", "OK", cvaKosResponse.getMessage());
@@ -58,7 +61,7 @@ public class TestCvaKosCalls {
 
         CvaKosResultItem kosResultItem = cvaKosResponse.getResults().get(0);
 
-        System.out.println(cvaKosMapper.writerWithDefaultPrettyPrinter().writeValueAsString(cvaKosResponse));
+        log.info(cvaKosMapper.writerWithDefaultPrettyPrinter().writeValueAsString(cvaKosResponse));
         assertTrue(true);
     }
 
@@ -73,7 +76,8 @@ public class TestCvaKosCalls {
 
         CvaKosResultItem kosResultItem = cvaKosResponse.getResults().get(0);
 
-        System.out.println(cvaKosMapper.writerWithDefaultPrettyPrinter().writeValueAsString(cvaKosResponse));
+        log.info(cvaKosMapper.writerWithDefaultPrettyPrinter().writeValueAsString(cvaKosResponse));
         assertTrue(true);
     }
+
 }

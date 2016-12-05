@@ -20,6 +20,15 @@ public class SolarSystem {
     @Column(name = "SolarSystemName")
     private String solarSystemName;
 
+    public SolarSystem(Long solarSystemId, String solarSystemName) {
+        this.solarSystemId = solarSystemId;
+        this.solarSystemName = solarSystemName;
+    }
+
+    public SolarSystem(String solarSystemName) {
+        this.solarSystemName = solarSystemName;
+    }
+
     public Long getId() {
         return id;
     }

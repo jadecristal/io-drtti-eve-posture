@@ -19,12 +19,12 @@ public class PilotPostureStorage {
     private HashMap<Pilot, Posture> pilotPosture;
 
     @PostConstruct
-    public void postureStorageStartup() {
+    private void postureStorageStartup() {
         // TODO:FUTURE load all unexpired pilot postures from JPA
     }
 
     @PreDestroy
-    public void postureStorageShutdown() {
+    private void postureStorageShutdown() {
         // TODO:FUTURE persist all unexpired pilot postures to JPA
     }
 

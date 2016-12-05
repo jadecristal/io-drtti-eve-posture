@@ -24,18 +24,16 @@ public class PilotLocationStorage {
     private HashMap<Pilot, SolarSystem> pilotSystem;
 
     @PostConstruct
-    public void positionStorageStartup() {
+    private void startup() {
         systemPilots = new HashMap<>();
         pilotSystem = new HashMap<>();
         // TODO:load all solar systems from JPA
         // TODO:FUTURE load all unexpired pilot positions from JPA
-        // TODO:if @PostConstruct methods are really public public then add defensive code
     }
 
     @PreDestroy
-    public void positionStorageShutdown() {
+    private void shutdown() {
         // TODO:FUTURE persist all unexpired pilot positions to JPA
-        // TODO:if @PreDestroy methods are really public public then add defensive code
     }
 
     /**
@@ -122,6 +120,14 @@ public class PilotLocationStorage {
         for (Pilot pilot : pilots) {
             setPilotLocation(pilot, solarSystem);
         }
+    }
+
+    /**
+     * Returns how many Pilots are currently being tracked.
+     * @return An int with the number of Pilots in the Pilot:SolarSystem Map
+     */
+    public int getPilotCount() {
+        return pilotSystem.size();
     }
 
 }

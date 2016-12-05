@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Configuration name="io-drtti-eve-logger" strict="true" status="INFO" monitorInternal="5">
+    <!-- Sets up a configuration named "io-drtti-eve-logger,"
+         using strict XML syntax for the configuration file, with internal
+         Log4j2 level is set to value of status, rescans of file for changes
+         at monitorInterval seconds. -->
+
+    <!-- Properties can be referenced elsewhere with StrLookup-interface style syntax. -->
+    <Properties>
+        <Property name="pattern.default">%d %-4r [%t] %-5p %c %x - %m%n</Property>
+        <Property name="logs.intellij">${log4j:configParentLocation}/../../log</Property>
+        <Property name="logs.wildfly">$${env:WILDFLY_HOME}/log</Property>
+        <Property name="logs.tomcat">$${env:CATALINA_HOME}/logs</Property>
+        <Property name="logs.filename">io-drtti-eve.log</Property>
+    </Properties>
+
+    <!-- Set up appenders: CONSOLE (System.out/STDOUT), the IntelliJ project log directory,
+         and the default server log folders for Wildfly and Tomcat. -->
+    <Appenders>
+        <Appender type="Console" name="CONSOLE">
+            <Layout type="PatternLayout">
+                <Pattern>${pattern.default}</Pattern>
+            </Layout>
+        </Appender>
+
+        <Appender type="File" name="LOGS_INTELLIJ" fileName="${logs.intellij}/${logs.filename}">
+            <Layout type="PatternLayout">
+                <Pattern>${pattern.default}</Pattern>
+            </Layout>
+        </Appender>
+
+        <!--<Appender type="File" name="LOGS_WILDFLY" fileName="${logs.wildfly}/${logs.filename}">
+            <Layout type="PatternLayout">
+                <Pattern>${pattern.default}</Pattern>
+            </Layout>
+        </Appender>
+
+        <Appender type="File" name="LOGS_TOMCAT" fileName="${logs.tomcat}/${logs.filename}">
+            <Layout type="PatternLayout">
+                <Pattern>${pattern.default}</Pattern>
+            </Layout>
+        </Appender>-->
+    </Appenders>
+
+    <!-- Set up just the root logger with main appenders.
+         For deployment, this is console and a server;
+         for the test suite, console and IntelliJ. -->
+    <Loggers>
+        <Root level="ALL">
+            <AppenderRef ref="CONSOLE"/>
+            <AppenderRef ref="LOGS_INTELLIJ"/>
+        </Root>
+    </Loggers>
+
+</Configuration>

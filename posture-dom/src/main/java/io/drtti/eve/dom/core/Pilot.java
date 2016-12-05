@@ -20,6 +20,15 @@ public class Pilot {
     @Column(name = "CharacterName")
     private String characterName;
 
+    public Pilot(Long characterId, String characterName) {
+        this.characterId = characterId;
+        this.characterName = characterName;
+    }
+
+    public Pilot(String characterName) {
+        this.characterName = characterName;
+    }
+
     public Long getId() {
         return id;
     }

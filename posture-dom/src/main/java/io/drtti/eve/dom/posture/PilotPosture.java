@@ -2,8 +2,6 @@ package io.drtti.eve.dom.posture;
 
 import io.drtti.eve.dom.core.Pilot;
 
-import java.time.LocalDateTime;
-
 /**
  * @author cwinebrenner
  */
@@ -11,7 +9,6 @@ public class PilotPosture {
 
     private Pilot pilot;
     private Posture posture;
-    private LocalDateTime timeStamp;
 
     public Pilot getPilot() {
         return pilot;
