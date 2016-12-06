@@ -23,5 +23,5 @@ public class TestHibernateJpaEntities {
         emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
         em = emf.createEntityManager();
     }
-
+    // TODO: Something to test something here
 }

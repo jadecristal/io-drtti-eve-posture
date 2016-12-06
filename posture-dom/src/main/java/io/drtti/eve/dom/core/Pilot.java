@@ -1,13 +1,14 @@
 package io.drtti.eve.dom.core;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * @author cwinebrenner
  */
 @Entity
 @Table(name = "Pilot")
-public class Pilot {
+public class Pilot implements Serializable {
 
     @Id
     @GeneratedValue
@@ -19,6 +20,9 @@ public class Pilot {
 
     @Column(name = "CharacterName")
     private String characterName;
+
+    public Pilot() {
+    }
 
     public Pilot(Long characterId, String characterName) {
         this.characterId = characterId;

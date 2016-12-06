@@ -1,13 +1,14 @@
 package io.drtti.eve.dom.core;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * @author cwinebrenner
  */
 @Entity
 @Table(name = "SolarSystem")
-public class SolarSystem {
+public class SolarSystem implements Serializable {
 
     @Id
     @GeneratedValue
@@ -19,6 +20,9 @@ public class SolarSystem {
 
     @Column(name = "SolarSystemName")
     private String solarSystemName;
+
+    public SolarSystem() {
+    }
 
     public SolarSystem(Long solarSystemId, String solarSystemName) {
         this.solarSystemId = solarSystemId;
