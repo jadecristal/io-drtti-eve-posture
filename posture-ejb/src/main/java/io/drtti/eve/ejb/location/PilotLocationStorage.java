@@ -3,7 +3,6 @@ package io.drtti.eve.ejb.location;
 import io.drtti.eve.dom.ccp.Pilot;
 import io.drtti.eve.dom.ccp.SolarSystem;
 import io.drtti.eve.dom.location.PilotLocation;
-import io.drtti.eve.dom.location.ReportedPilotLocation;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
