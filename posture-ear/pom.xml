@@ -33,6 +33,10 @@
     <build>
         <finalName>${project.parent.groupId}-${project.parent.artifactId}</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.zeroturnaround</groupId>
+                <artifactId>jrebel-maven-plugin</artifactId>
+            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -50,11 +54,11 @@
                         <webModule>
                             <groupId>${project.groupId}</groupId>
                             <artifactId>${project.parent.artifactId}-web</artifactId>
+                            <contextRoot>/</contextRoot>
                         </webModule>
                     </modules>
                 </configuration>
             </plugin>
-
         </plugins>
     </build>
 
