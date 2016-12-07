@@ -4,6 +4,8 @@ import io.drtti.eve.dom.ccp.Pilot;
 import io.drtti.eve.dom.ccp.SolarSystem;
 import io.drtti.eve.dom.location.PilotLocation;
 
+import org.apache.log4j.Logger;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;
@@ -19,6 +21,8 @@ import java.util.Set;
 @Singleton
 @Startup
 public class PilotLocationStorage {
+
+    private final Logger log = Logger.getLogger(this.getClass());
 
     private HashMap<SolarSystem, HashSet<Pilot>> systemPilots;
     private HashMap<Pilot, SolarSystem> pilotSystem;
@@ -79,21 +83,29 @@ public class PilotLocationStorage {
      */
     public void setPilotLocation(Pilot pilot, SolarSystem solarSystem) {
 
+        log.debug("Requested set location of Pilot: " + pilot.getCharacterName() + " in SolarSystem: " + solarSystem.getSolarSystemName());
+        log.info("Setting location of Pilot: " + pilot.getCharacterName() + " to SolarSystem: " + solarSystem.getSolarSystemName());
+
         // if we know where the pilot is now, remove them from that location
         if (pilotSystem.containsKey(pilot)) {
+            log.debug("- Found Pilot in SolarSystem: " + pilotSystem.get(pilot).getSolarSystemName());
             systemPilots.get(pilotSystem.get(pilot)).remove(pilot);
+            log.debug("- Removed Pilot from SolarSystem:Pilots Map (previously reported location)");
         }
 
         // if the solar system the pilot is now is in new to us, initialize it
         if (!systemPilots.containsKey(solarSystem)) {
+            log.debug("- SolarSystem: " + solarSystem.getSolarSystemName() + " not present in storage; initializing backing HashSet");
             systemPilots.put(solarSystem, new HashSet<>());
         }
 
         // the solar system the pilot is in was there or initialized; add them
         systemPilots.get(solarSystem).add(pilot);
+        log.debug("- Added Pilot to SolarSystem:Pilots Map");
 
         // pilot can only be one place; add them there (overwrites if present)
         pilotSystem.put(pilot, solarSystem);
+        log.debug("- Added Pilot to Pilot:SolarSystem Map");
 
     }
 
@@ -120,6 +132,27 @@ public class PilotLocationStorage {
         for (Pilot pilot : pilots) {
             setPilotLocation(pilot, solarSystem);
         }
+    }
+
+    /**
+     * Removes the location of a Pilot from all in-memory storage.
+     * @param pilot Pilot to forget the location of
+     */
+    public void clearPilotLocation(Pilot pilot) {
+
+        log.debug("Requested clearing location of Pilot: " + pilot.getCharacterName());
+        log.info("Clearing location of Pilot: " + pilot.getCharacterName());
+
+        // if we know where the pilot is now, remove them from that location,
+        // then remove them from the
+        if (pilotSystem.containsKey(pilot)) {
+            log.debug("- Found Pilot in SolarSystem: " + pilotSystem.get(pilot).getSolarSystemName());
+            systemPilots.get(pilotSystem.get(pilot)).remove(pilot);
+            log.debug("- Removed Pilot from SolarSystem:Pilots Map");
+            pilotSystem.remove(pilot);
+            log.debug("- Removed Pilot from Pilot:SolarSystem Map");
+        }
+
     }
 
     /**

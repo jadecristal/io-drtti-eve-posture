@@ -28,6 +28,15 @@ public class ReportedPilotLocation extends PilotLocation implements ExpirableRep
         this.reportedTimeStamp = reportedTimeStamp;
     }
 
+    public ReportedPilotLocation(PilotLocation pilotLocation) {
+        super(pilotLocation.getPilot(), pilotLocation.getSolarSystem());
+        this.reportedTimeStamp = LocalDateTime.now();
+    }
+
+    public PilotLocation getPilotLocation() {
+        return new PilotLocation(this.getPilot(), this.getSolarSystem());
+    }
+
     public LocalDateTime getReportedTimeStamp() {
         return reportedTimeStamp;
     }
