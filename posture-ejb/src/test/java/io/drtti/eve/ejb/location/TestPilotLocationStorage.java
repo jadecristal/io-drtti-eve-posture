@@ -1,7 +1,7 @@
 package io.drtti.eve.ejb.location;
 
-import io.drtti.eve.dom.core.Pilot;
-import io.drtti.eve.dom.core.SolarSystem;
+import io.drtti.eve.dom.ccp.Pilot;
+import io.drtti.eve.dom.ccp.SolarSystem;
 import io.drtti.eve.dom.location.PilotLocation;
 
 import org.apache.log4j.Logger;

@@ -1,4 +1,4 @@
-package io.drtti.eve.dom.core;
+package io.drtti.eve.dom.ccp;
 
 import javax.persistence.*;
 import java.io.Serializable;

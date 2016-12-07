@@ -1,7 +1,7 @@
 package io.drtti.eve.ejb.posture;
 
-import io.drtti.eve.dom.core.Pilot;
-import io.drtti.eve.dom.posture.Posture;
+import io.drtti.eve.dom.ccp.Pilot;
+import io.drtti.eve.dom.core.Posture;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;

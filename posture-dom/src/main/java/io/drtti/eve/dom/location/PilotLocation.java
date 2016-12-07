@@ -1,7 +1,7 @@
 package io.drtti.eve.dom.location;
 
-import io.drtti.eve.dom.core.Pilot;
-import io.drtti.eve.dom.core.SolarSystem;
+import io.drtti.eve.dom.ccp.Pilot;
+import io.drtti.eve.dom.ccp.SolarSystem;
 
 /**
  * @author cwinebrenner
