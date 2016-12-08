@@ -29,7 +29,7 @@ A distributed-input asynchronous feedback system for [EVE Online](http://www.eve
 ##### Instructions:
 * From: _/etc/letsencrypt/live/**{DOMAIN}**_:
 
-      [user@hostname {DOMAIN}]$ openssl pkcs12 -export -in fullchain.pem -inkey privkey.pem -out letsencrypt-{DOMAIN}.pkcs12 -name letsencrypt-{DOMAIN} -CAfile chain.pem -caname letsencrypt-root
+        [user@hostname {DOMAIN}]# openssl pkcs12 -export -in fullchain.pem -inkey privkey.pem -out letsencrypt-{DOMAIN}.pkcs12 -name letsencrypt-{DOMAIN} -CAfile chain.pem -caname letsencrypt-root
 
 * Provide: a password, which you'll need later on and should probably remember
 

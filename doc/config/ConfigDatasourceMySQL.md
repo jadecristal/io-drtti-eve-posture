@@ -22,9 +22,9 @@ A distributed-input asynchronous feedback system for [EVE Online](http://www.eve
 ##### Instructions:
 * Use jboss-cli.sh shell
 
-      [standalone@embedded /] module add --name=com.mysql --slot=main --resources={PATH}/mysql-connector-java-5.1.40-bin.jar --dependencies=javax.api,javax.transaction.api
-      [standalone@embedded /] cn /subsystem=datasources/
-      [standalone@embedded subsystem=datasources] ./jdbc-driver=mysql:add(driver-name=mysql, driver-module-name=com.mysql, driver-class-name=com.mysql.jdbc.Driver, driver-xa-datasource-class-name=com.mysql.jdbc.jdbc2.optional.MysqlXADataSource)
+        [standalone@embedded /] module add --name=com.mysql --slot=main --resources={PATH}/mysql-connector-java-5.1.40-bin.jar --dependencies=javax.api,javax.transaction.api
+        [standalone@embedded /] cn /subsystem=datasources/
+        [standalone@embedded subsystem=datasources] ./jdbc-driver=mysql:add(driver-name=mysql, driver-module-name=com.mysql, driver-class-name=com.mysql.jdbc.Driver, driver-xa-datasource-class-name=com.mysql.jdbc.jdbc2.optional.MysqlXADataSource)
 
 ---
 
@@ -46,7 +46,7 @@ A distributed-input asynchronous feedback system for [EVE Online](http://www.eve
 ##### Instructions:
 * Use jboss-cli.sh shell
 
-      [standalone@embedded /] data-source add --name={NAME} --driver-name=mysql --user-name={DBUSER} --password={DBPASS} --connection-url="jdbc:mysql://{DBSERVER}:{DBPORT}/{DB}?autoReconnect=true&useSSL=false" --jndi-name=java:jboss/datasources/{NAME}
+        [standalone@embedded /] data-source add --name={NAME} --driver-name=mysql --user-name={DBUSER} --password={DBPASS} --connection-url="jdbc:mysql://{DBSERVER}:{DBPORT}/{DB}?autoReconnect=true&useSSL=false" --jndi-name=java:jboss/datasources/{NAME}
 
 * TODO:Add connection pooling instructions
 * TODO:Add connection test command instructions

@@ -30,12 +30,12 @@ A distributed-input asynchronous feedback system for [EVE Online](http://www.eve
 * Use jboss-cli.sh shell (replace **{domain}** with your domain)
 * Add a socket binding for remote connections:
 
-      [standalone@embedded /] cn /socket-binding=standard-sockets/
-      [standalone@embedded socket-binding=standard-sockets] ./socket-binding=artemis-ssl/:add(port=61617)
+        [standalone@embedded /] cn /socket-binding=standard-sockets/
+        [standalone@embedded socket-binding=standard-sockets] ./socket-binding=artemis-ssl/:add(port=61617)
 
 * Configure the socket binding for SSL:
 
-      [standalone@embedded /] cn /subsystem=messaging-activemq/server=default
-      [standalone@embedded server=default] ./remote-connector=artemis-ssl-connector/:add(socket-binding=artemis-ssl)
-      [standalone@embedded server=default] cn /remote-connector=artemis-ssl-connector/socket-binding=artemis-ssl/
-      [standalone@embedded socket-binding=artemis-ssl] :write-attribute(name=params, value={ ssl-enabled => true, key-store-path => ${jboss.server.config.dir}/letsencrypt-{DOMAIN}.pkcs12, key-store-password => {PASSWORD})
+        [standalone@embedded /] cn /subsystem=messaging-activemq/server=default
+        [standalone@embedded server=default] ./remote-connector=artemis-ssl-connector/:add(socket-binding=artemis-ssl)
+        [standalone@embedded server=default] cn /remote-connector=artemis-ssl-connector/socket-binding=artemis-ssl/
+        [standalone@embedded socket-binding=artemis-ssl] :write-attribute(name=params, value={ ssl-enabled => true, key-store-path => ${jboss.server.config.dir}/letsencrypt-{DOMAIN}.pkcs12, key-store-password => {PASSWORD})

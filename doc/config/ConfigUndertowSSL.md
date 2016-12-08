@@ -25,19 +25,19 @@ A distributed-input asynchronous feedback system for [EVE Online](http://www.eve
 * Use jboss-cli.sh shell (replace **{domain}** with your domain)
 * Add a security realm called SSLRealm:
 
-      [standalone@embedded /] cn /core-service=management
-      [standalone@embedded core-service=management] ./security-realm=SSLRealm/:add()
-      [standalone@embedded core-service=management] cn security-realm=SSLRealm
-      [standalone@embedded security-realm=SSLRealm] ./server-identity=ssl/:add(keystore-path=letsencrypt-{DOMAIN}.pkcs12, keystore-relative-to=jboss.server.config.dir, alias=letsencrypt-{DOMAIN}, keystore-password={PASSWORD})
+        [standalone@embedded /] cn /core-service=management
+        [standalone@embedded core-service=management] ./security-realm=SSLRealm/:add()
+        [standalone@embedded core-service=management] cn security-realm=SSLRealm
+        [standalone@embedded security-realm=SSLRealm] ./server-identity=ssl/:add(keystore-path=letsencrypt-{DOMAIN}.pkcs12, keystore-relative-to=jboss.server.config.dir, alias=letsencrypt-{DOMAIN}, keystore-password={PASSWORD})
 
 * Modify the default server in the undertow subsystem to use the new security realm:
 
-      [standalone@embedded /] cn /subsystem=undertow/server=default-server
-      [standalone@embedded server=default-server] ./https-listener=default-https/:add(socket-binding=https, security-realm=SSLRealm)
+        [standalone@embedded /] cn /subsystem=undertow/server=default-server
+        [standalone@embedded server=default-server] ./https-listener=default-https/:add(socket-binding=https, security-realm=SSLRealm)
 
 * Optionally, modify the management interface to use SSL:
 
-      [standalone@embedded /] cn /core-service=management/security-realm=ManagementRealm
-      [standalone@embedded security-realm=ManagementRealm] ./server-identity=ssl/:add(keystore-path=letsencrypt-{DOMAIN}.pkcs12, keystore-relative-to=jboss.server.config.dir, alias=letsencrypt-{DOMAIN}, keystore-password={PASSWORD})
-      [standalone@embedded security-realm=ManagementRealm] cn /core-service=management/management-interface=http-interface
-      [standalone@embedded management-interface=http-interface] :write-attribute(name=secure-socket-binding, value=management-https)
+        [standalone@embedded /] cn /core-service=management/security-realm=ManagementRealm
+        [standalone@embedded security-realm=ManagementRealm] ./server-identity=ssl/:add(keystore-path=letsencrypt-{DOMAIN}.pkcs12, keystore-relative-to=jboss.server.config.dir, alias=letsencrypt-{DOMAIN}, keystore-password={PASSWORD})
+        [standalone@embedded security-realm=ManagementRealm] cn /core-service=management/management-interface=http-interface
+        [standalone@embedded management-interface=http-interface] :write-attribute(name=secure-socket-binding, value=management-https)
