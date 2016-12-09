@@ -8,14 +8,18 @@ A distributed-input asynchronous feedback system for [EVE Online](http://www.eve
 
 ---
 
-### Undertow (Web Container) SSL Setup
-
-#### Configure the JEE server to use the _letencrypt.org_ keystore for SSL
+### Undertow (Web Container) SSL Setup (Wildfly 10.x)
 
 #### Before Starting:
 * You need to have a pkcs12 or jks keystore ready with SSL certificates
 * You need to have [already built your keystore](ConfigLetsEncrypt.md) from letsencrypt.org
-* Copy the keystore to _/opt/wildfly/standalone/_ assuming you're using Wildfly 10.x
+* Copy the keystore to _/opt/wildfly/standalone/configuration_, assuming you're using Wildfly 10.x
+
+#### Configure the JEE server to use the _letencrypt.org_ keystore for SSL
+
+##### References:
+* [Wildfly 10 Admin Guide: Enable SSL](https://docs.jboss.org/author/display/WFLY10/Admin+Guide#AdminGuide-EnableSSL)
+* [Stackoverflow "Wildfly 9 http to https"](http://stackoverflow.com/questions/32008182/wildfly-9-http-to-https)
 
 ##### Definitions:
 * Where: _**{DOMAIN}**_ is the name of your domain, like "_example.com_"
@@ -23,21 +27,17 @@ A distributed-input asynchronous feedback system for [EVE Online](http://www.eve
 
 ##### Instructions: 
 * Use jboss-cli.sh shell (replace **{domain}** with your domain)
-* Add a security realm called SSLRealm:
+* Reconfigure the built-in security realm called ApplicationRealm: 
 
-        [standalone@embedded /] cn /core-service=management
-        [standalone@embedded core-service=management] ./security-realm=SSLRealm/:add()
-        [standalone@embedded core-service=management] cn security-realm=SSLRealm
-        [standalone@embedded security-realm=SSLRealm] ./server-identity=ssl/:add(keystore-path=letsencrypt-{DOMAIN}.pkcs12, keystore-relative-to=jboss.server.config.dir, alias=letsencrypt-{DOMAIN}, keystore-password={PASSWORD})
+        [standalone@embedded /] cn /core-service=management/security-realm=ApplicationRealm/server-identity=ssl
+        [standalone@embedded server-identity=ssl] :write-attribute(name=keystore-path, value=letsencrypt-{DOMAIN}.pkcs12)
+        [standalone@embedded server-identity=ssl] :write-attribute(name=keystore-password, value={PASSWORD})
+        [standalone@embedded server-identity=ssl] :write-attribute(name=alias, value=letsencrypt-{DOMAIN})
+        [standalone@embedded server-identity=ssl] :undefine-attribute(name=key-password)
+        [standalone@embedded server-identity=ssl] :undefine-attribute(name=generate-self-signed-certificate-host)
 
-* Modify the default server in the undertow subsystem to use the new security realm:
-
-        [standalone@embedded /] cn /subsystem=undertow/server=default-server
-        [standalone@embedded server=default-server] ./https-listener=default-https/:add(socket-binding=https, security-realm=SSLRealm)
-
-* Optionally, modify the management interface to use SSL:
-
-        [standalone@embedded /] cn /core-service=management/security-realm=ManagementRealm
-        [standalone@embedded security-realm=ManagementRealm] ./server-identity=ssl/:add(keystore-path=letsencrypt-{DOMAIN}.pkcs12, keystore-relative-to=jboss.server.config.dir, alias=letsencrypt-{DOMAIN}, keystore-password={PASSWORD})
-        [standalone@embedded security-realm=ManagementRealm] cn /core-service=management/management-interface=http-interface
-        [standalone@embedded management-interface=http-interface] :write-attribute(name=secure-socket-binding, value=management-https)
+#### After Finishing:
+* Internet Explorer 11 probably works with SSL
+* Wildfly ships with HTTP/2 turned on on the connectors
+  * Chrome and Firefox give SSL errors due to the crypto setup
+  * Go [harden the SSL configuration](ConfigJavaSSLSecurity.md) to make them stop complaining

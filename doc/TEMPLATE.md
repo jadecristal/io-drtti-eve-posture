@@ -33,15 +33,15 @@ A distributed-input asynchronous feedback system for [EVE Online](http://www.eve
 * Use some tool to do this (pay attention to variable **{VARIABLE}** for your value)
 * Sub-point of Thing 1 to do
 
-      $ commands to run
+        $ commands to run
 
 * Sub-point of Thing 1 to do next
 
-      [localhost:9990 /] CLI command do-something
+        [localhost:9990 /] CLI command do-something
 
 * From: _/some/path/with/a/**{VARIABLE}**_:
 
-      $ command or code to run in contextual location
+        $ command or code to run in contextual location
 
 #### After Finishing:
 * Things that you might want to know

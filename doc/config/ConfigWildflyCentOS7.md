@@ -11,7 +11,7 @@ A distributed-input asynchronous feedback system for [EVE Online](http://www.eve
 ### Install Wildfly 10.x
 
 #### Before Starting:
-* [Download](http://wildfly.org/downloads/) the wildfly-10.1.0.Final.tar.gz (or similar version; change version numbers below if necessary) file to your home directory
+* [Download](http://wildfly.org/downloads/) the wildfly-10.1.0.Final.tar.gz (or similar version; change version numbers below if necessary) file to your home directory (i.e. _/root_)
 
 #### Install Wildfly as a systemd service
 
