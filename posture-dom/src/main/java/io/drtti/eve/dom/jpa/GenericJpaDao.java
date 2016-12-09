@@ -1,7 +1,6 @@
 package io.drtti.eve.dom.jpa;
 
 import java.io.Serializable;
-import java.lang.reflect.ParameterizedType;
 
 /**
  * @author cwinebrenner
@@ -10,8 +9,10 @@ import java.lang.reflect.ParameterizedType;
  */
 public class GenericJpaDao<T extends Serializable> extends AbstractJpaDao<T> implements GenericDao<T> {
 
-    public GenericJpaDao() {
-        setEntityClass( (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0] );
+    public GenericJpaDao(Class<T> entityClass) {
+        log.info(getClass().getGenericSuperclass().toString());
+        //setEntityClass( (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0] );
+        setEntityClass(entityClass);
     }
 
 }

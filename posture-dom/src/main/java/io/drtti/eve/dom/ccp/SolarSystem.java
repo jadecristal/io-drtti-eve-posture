@@ -11,7 +11,7 @@ import java.io.Serializable;
 public class SolarSystem implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", columnDefinition = "BIGINT")
     private Long id;
 

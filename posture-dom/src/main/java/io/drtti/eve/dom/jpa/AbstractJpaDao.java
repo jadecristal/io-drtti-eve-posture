@@ -19,39 +19,46 @@ import java.util.List;
  */
 public abstract class AbstractJpaDao<T extends Serializable> {
 
-    private final Logger log = Logger.getLogger(this.getClass());
+    final Logger log = Logger.getLogger(this.getClass());
 
     @PersistenceContext
-    private EntityManager em;
+    EntityManager em;
 
     private Class<T> entityClass;
 
-    public void setEntityClass(Class<T> entityClass) {
+    void setEntityClass(Class<T> entityClass) {
+        log.info("JPA DAO: Configuring concrete implementation as " + entityClass.getName());
         this.entityClass = entityClass;
     }
 
     public T getById(Long id) {
+        log.info("JPA DAO: Searching for " + entityClass.getSimpleName() + " with ID " + id);
         return em.find(entityClass, id);
     }
 
     public void removeById(Long id) {
+        log.info("JPA DAO: Attempting to remove " + entityClass.getSimpleName() + " with ID " + id);
         T entity = getById(id);
         remove(entity);
     }
 
     public List<T> getAll() {
+        log.info("JPA DAO: Searching for all " + entityClass.getSimpleName());
         return em.createQuery("from " + entityClass.getName()).getResultList();
     }
 
     public void persist(T entity) {
+        log.info("JPA DAO: Attempting to persist " + entityClass.getSimpleName() + ": " + entity.toString());
         em.persist(entity);
     }
 
     public void merge(T entity) {
+        log.info("JPA DAO: Attempting to merge " + entityClass.getSimpleName() + ": " + entity.toString());
         em.merge(entity);
     }
 
     public void remove(T entity) {
+        log.info("JPA DAO: Attempting to remove " + entityClass.getSimpleName() + ": " + entity.toString());
         em.remove(entity);
     }
 

@@ -23,7 +23,6 @@
           <element id="library" level="project" name="Maven: org.apache.oltu.oauth2:org.apache.oltu.oauth2.common:1.0.2" />
           <element id="library" level="project" name="Maven: org.json:json:20140107" />
           <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.9" />
-          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.7" />
         </element>
       </element>
       <element id="directory" name="META-INF">
