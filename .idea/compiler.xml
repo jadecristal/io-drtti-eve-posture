@@ -9,6 +9,7 @@
         <module name="posture-dom" />
         <module name="posture-ear" />
         <module name="posture-ejb" />
+        <module name="posture-test" />
         <module name="posture-web" />
       </profile>
     </annotationProcessing>
@@ -17,6 +18,7 @@
       <module name="posture-dom" target="1.8" />
       <module name="posture-ear" target="1.5" />
       <module name="posture-ejb" target="1.8" />
+      <module name="posture-test" target="1.8" />
       <module name="posture-web" target="1.8" />
     </bytecodeTargetLevel>
   </component>

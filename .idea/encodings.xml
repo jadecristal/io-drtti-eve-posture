@@ -5,6 +5,7 @@
     <file url="file://$PROJECT_DIR$/posture-dom" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/posture-ear" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/posture-ejb" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/posture-test" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/posture-web" charset="UTF-8" />
   </component>
 </project>

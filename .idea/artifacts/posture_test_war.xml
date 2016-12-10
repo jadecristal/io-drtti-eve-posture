@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="posture-test:war">
+    <output-path>$PROJECT_DIR$/posture-test/target</output-path>
+    <root id="archive" name="posture-test.war">
+      <element id="artifact" artifact-name="posture-test:war exploded" />
+    </root>
+  </artifact>
+</component>

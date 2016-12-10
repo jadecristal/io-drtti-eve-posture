@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArquillianContainersManager">
+    <container containerId="container.arquillian.manual" name="Wildfly Embedded 10.x">
+      <maven-library groupId="org.wildfly.arquillian" artifactId="wildfly-arquillian-container-embedded" version="2.0.0.Final" />
+      <configurationSpecific>
+        <configurationSpecific runContainerQualifier="wildfly" />
+      </configurationSpecific>
+    </container>
+  </component>
+</project>

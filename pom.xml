@@ -13,6 +13,7 @@
         <module>posture-dom</module>
         <module>posture-ejb</module>
         <module>posture-web</module>
+        <module>posture-test</module>
     </modules>
 
     <!-- http://javapapo.blogspot.gr/2014/04/java-ee7-and-maven-project-for-newbies.html -->
@@ -39,6 +40,7 @@
         <!-- Wildfly Testing Versions -->
         <arquillian-version>1.1.11.Final</arquillian-version>
         <wildfly-version>10.1.0.Final</wildfly-version>
+        <wildfly-arquillian-version>2.0.0.Final</wildfly-arquillian-version>
 
         <!-- Specific Tool Versions -->
         <jpa-hibernate-orm-version>5.2.5.Final</jpa-hibernate-orm-version>
@@ -67,7 +69,7 @@
                 <scope>test</scope>
             </dependency>
 
-            <!-- JBoss Arquillian (+Wildfly) Testing Framework -->
+            <!-- Arquillian / Wildfly -->
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
                 <artifactId>arquillian-bom</artifactId>
@@ -81,6 +83,24 @@
                 <version>${wildfly-version}</version>
                 <scope>import</scope>
                 <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian.junit</groupId>
+                <artifactId>arquillian-junit-container</artifactId>
+                <version>${arquillian-version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.wildfly.arquillian</groupId>
+                <artifactId>wildfly-arquillian-container-embedded</artifactId>
+                <version>${wildfly-arquillian-version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian.protocol</groupId>
+                <artifactId>arquillian-protocol-servlet</artifactId>
+                <version>${arquillian-version}</version>
+                <scope>test</scope>
             </dependency>
 
             <!-- Apache Log4J 2.x Logging Framework, Web Servlet Support, and 1.x API Compatibility Layer -->
