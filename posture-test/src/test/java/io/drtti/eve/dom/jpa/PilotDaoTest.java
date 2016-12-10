@@ -36,7 +36,8 @@ public class PilotDaoTest {
                 .addPackage(PilotDaoTest.class.getPackage())
                 .addPackage(PilotDao.class.getPackage())
                 .addPackage(Pilot.class.getPackage())
-                .addAsResource("META-INF/persistence.xml");
+                .addAsResource("META-INF/arquillian-persistence.xml", "META-INF/persistence.xml")
+                .addAsResource("META-INF/arquillian-wildfly-ds.xml", "META-INF/wildfly-ds.xml");
     }
 
     @Before
