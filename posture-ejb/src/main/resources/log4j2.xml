@@ -2,7 +2,7 @@
 <Configuration name="io-drtti-eve-logger" strict="true" status="INFO" monitorInternal="5">
     <!-- Sets up a configuration named "io-drtti-eve-logger,"
          using strict XML syntax for the configuration file, with internal
-         Log4j2 level is set to value of status, rescans of file for changes
+         Log4j2 level set to value of status, rescans of file for changes
          at monitorInterval seconds. -->
 
     <!-- Properties can be referenced elsewhere with StrLookup-interface style syntax. -->
