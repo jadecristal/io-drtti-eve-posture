@@ -1,4 +1,4 @@
-package io.drtti.eve.ejb.sso;
+package io.drtti.eve.web.sso;
 
 import org.apache.log4j.Logger;
 
@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * @author cwinebrenner
  */
-@WebServlet(urlPatterns = "/ccp/eve/sso")
+@WebServlet(urlPatterns = "/ccp/eve/sso/")
 public class CcpEveSsoResponseHandler extends HttpServlet {
 
     private final Logger log = Logger.getLogger(this.getClass());
@@ -27,7 +27,11 @@ public class CcpEveSsoResponseHandler extends HttpServlet {
             Map<String, String[]> requestParameters = request.getParameterMap();
 
             for (String key : requestParameters.keySet()) {
-                out.println("<p>" + key + " : " + requestParameters.get(key).toString() + "</p>\n");
+
+                for (String paramString : requestParameters.get(key)) {
+                    out.println("<p>" + key + " : " + paramString + "</p>\n");
+                }
+
             }
             out.println("</body></html>");
         }

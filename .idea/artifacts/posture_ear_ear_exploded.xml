@@ -6,6 +6,7 @@
       <element id="directory" name="META-INF">
         <element id="file-copy" path="$PROJECT_DIR$/posture-ear/target/io.drtti.eve-posture/META-INF/MANIFEST.MF" />
       </element>
+      <element id="dir-copy" path="$PROJECT_DIR$/posture-ear/src/main/application" />
       <element id="archive" name="posture-ejb-1.0-SNAPSHOT.jar">
         <element id="artifact" artifact-name="posture-ejb:ejb exploded" />
       </element>
