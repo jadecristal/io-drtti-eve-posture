@@ -17,7 +17,7 @@
 </div>
 <div class="f-center">
     <p class="t-center">
-        <a href="https://login.eveonline.com/oauth/authorize/?response_type=code&redirect_uri=https://drtti.io/ccp/eve/sso/&client_id=61925ed48911466bbc5f2072858bf2e0&scope=characterLocationRead&state=<% out.print(session.getId()); %>"><img src="image/ccp-eve-sso.png" /></a>
+        <a href="/ccp/eve/sso/"><img src="image/ccp-eve-sso.png" /></a>
     </p>
 </div>
 </body>
