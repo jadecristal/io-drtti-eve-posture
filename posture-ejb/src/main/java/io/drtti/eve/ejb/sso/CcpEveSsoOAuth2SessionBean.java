@@ -39,8 +39,7 @@ import java.io.Serializable;
  * @author cwinebrenner
  */
 @Stateful(passivationCapable = false)
-@SessionScoped
-public class CcpEveSsoOAuth2SessionBean implements Serializable {
+public class CcpEveSsoOAuth2SessionBean {
 
     private final Logger log = Logger.getLogger(this.getClass());
 
