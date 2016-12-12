@@ -16,7 +16,8 @@ public class CcpEveSsoOAuth2Config {
 
     // OAuth2 token endpoint configuration constants (scopes application-dependent)
     public final static String CCP_EVE_SSO_OAUTH2_ENDPOINT_TOKEN_URI = "https://login.eveonline.com/oauth/token/";
-    public final static String CCP_EVE_SSO_OAUTH2_SCOPES = "characterLocationRead,esi-location.read_location.v1";
+    public final static String CCP_EVE_SSO_OAUTH2_SCOPES_CREST = "characterLocationRead";
+    public final static String CCP_EVE_SSO_OAUTH2_SCOPES_ESI = "esi-location.read_location.v1";
 
     // OAuth2 application configuration constants (application-dependent)
     public final static String DRTTI_CCP_EVE_CONTACT_WITH_PROBLEMS = "jadecristal@gmail.com";

@@ -55,7 +55,7 @@ public class CcpEveSsoOAuth2Bean {
                     .setRedirectURI(CcpEveSsoOAuth2Config.DRTTI_CCP_EVE_SSO_OAUTH2_CALLBACK_URI)
                     .setClientId(CcpEveSsoOAuth2Config.DRTTI_CCP_EVE_SSO_OAUTH2_CLIENT_ID)
                     .setState(session.getId())  // TODO: Harden state value more
-                    .setParameter("scope", CcpEveSsoOAuth2Config.CCP_EVE_SSO_OAUTH2_SCOPES)
+                    .setParameter("scope", CcpEveSsoOAuth2Config.CCP_EVE_SSO_OAUTH2_SCOPES_ESI)
                     .buildQueryMessage();
             return authRequest.getLocationUri();
 

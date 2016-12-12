@@ -17,7 +17,7 @@
 </div>
 <div class="f-center">
     <p class="t-center">
-        <% out.print("Welcome, " + request.getSession().getAttribute("AuthenticatedPilotName")); %>
+      <pre><% out.print(request.getSession().getAttribute("AuthenticatedPilotName")); %></pre>
     </p>
 </div>
 </body>
