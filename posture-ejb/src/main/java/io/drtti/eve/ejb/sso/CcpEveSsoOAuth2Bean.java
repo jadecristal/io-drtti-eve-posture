@@ -15,16 +15,15 @@ import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.apache.oltu.oauth2.common.message.types.GrantType;
 
-import javax.ejb.Remove;
-import javax.ejb.Stateful;
-import javax.enterprise.context.SessionScoped;
+import javax.ejb.Stateless;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.Serializable;
+import java.util.Base64;
 
 /**
- * Implements the CCP EVE SSO OAuth2 flow. Constants are stored in CcpEveSsoOAuth2Config.
- * This approximately looks like:
+ * Helps manipulate credentials for the CCP EVE SSO OAuth2 flow.
+ * Constants specific to this application are stored in CcpEveSsoOAuth2Config.
+ * The CCP EVE SSO OAuth2 flows are:
  * <p>
  * OAuth2 AUTHORIZATION FLOW:
  * User-Agent: Click triggers HTTPS GET to SSO-Endpoint-Auth using URI from getAuthRequestURI()
@@ -34,43 +33,20 @@ import java.io.Serializable;
  * OAuth2 TOKEN FLOW
  * Bean: Makes HTTPS POST for user to SSO-Endpoint-Token asking for tokens with auth code
  * SSO-Endpoint-Token: Returns access and refresh tokens, with expiration time (seconds)
- * Bean: Can now make API request to approved scopes as authenticated characterId
- * Bean: If access_token expired, send the refresh_token to SSO-Endpoint-Token for a new one
+ * Bean: If access_token expired, send the refresh_token to SSO-Endpoint-Token for a new access_token
+ *
  * @author cwinebrenner
  */
-@Stateful(passivationCapable = false)
-public class CcpEveSsoOAuth2SessionBean {
+@Stateless
+public class CcpEveSsoOAuth2Bean {
 
     private final Logger log = Logger.getLogger(this.getClass());
 
-    private HttpSession session;
-    private CcpEveSsoOAuth2Credential credential;
-
-    public CcpEveSsoOAuth2SessionBean() {
-        this.credential = new CcpEveSsoOAuth2Credential();
+    public CcpEveSsoOAuth2Bean() {
     }
 
-    /**
-     * Associates a HttpSession for the current user session with this bean instance.
-     * @param session HttpSession for the current user
-     */
-    public void bindSession(HttpSession session) {
-        if (this.session == null) {
-            this.session = session;
-        }
-        if (this.credential == null) {
-            credential = (CcpEveSsoOAuth2Credential)session.getAttribute("CcpEveSsoOAuth2Credential");
-            if (credential == null) {
-                credential = new CcpEveSsoOAuth2Credential();
-            }
-        }
-    }
+    public String getAuthRequestURI(HttpSession session) {
 
-    /**
-     * Provides the correct OAuth2 URI for the current user session.
-     * @return String with the URI to be used be used for the CCP EVE SSO for this user session, or null
-     */
-    public String getAuthRequestURI() {
         try {
             // TODO: as part of hardening state, do some JSESSIONID + something hashing and store it for use below
             OAuthClientRequest authRequest = OAuthClientRequest
@@ -79,6 +55,7 @@ public class CcpEveSsoOAuth2SessionBean {
                     .setRedirectURI(CcpEveSsoOAuth2Config.DRTTI_CCP_EVE_SSO_OAUTH2_CALLBACK_URI)
                     .setClientId(CcpEveSsoOAuth2Config.DRTTI_CCP_EVE_SSO_OAUTH2_CLIENT_ID)
                     .setState(session.getId())  // TODO: Harden state value more
+                    .setParameter("scopes", CcpEveSsoOAuth2Config.CCP_EVE_SSO_OAUTH2_SCOPES)
                     .buildQueryMessage();
             return authRequest.getLocationUri();
 
@@ -88,85 +65,78 @@ public class CcpEveSsoOAuth2SessionBean {
         }
     }
 
-    /**
-     * Checks the purported OAuth2 callback for the expected parameters.
-     * @param req HttpServletRequest from the OAuth2 callback URI request
-     * @return Whether or not the OAuth2 'code' and 'state' were present in the HttpServletRequest
-     */
-    public boolean containsAuthCallback(HttpServletRequest req) {
-        return ((req.getParameter("code") != null) && (req.getParameter("state") != null));
+    public boolean containsAuthCallback(HttpServletRequest request) {
+        return ((request.getParameter("code") != null) && (request.getParameter("state") != null));
     }
 
-    /**
-     * Handles the returned OAuth2 authentication request to get access tokens.
-     * @param req HttpServletRequest from the OAuth2 callback URI request
-     */
-    public void processAuthCallback(HttpServletRequest req) {
+    public CcpEveSsoOAuth2Credential processAuthCallback(HttpServletRequest req) {
+
         try {
             OAuthAuthzResponse authResponse = OAuthAuthzResponse.oauthCodeAuthzResponse(req);
-            requestAccessToken(authResponse);
+            return requestAccessToken(authResponse);
         } catch (OAuthProblemException oape) {
             log.error(oape);
+            return null;
         }
     }
 
-    /**
-     * Internal method to get the initial OAuth2 credentials for this session.
-     * @param authResponse OAuthAuthzReponse containing OAuth2 callback parameters
-     */
-    private void requestAccessToken(OAuthAuthzResponse authResponse) {
+    private CcpEveSsoOAuth2Credential requestAccessToken(OAuthAuthzResponse authResponse) {
         try {
-            OAuthClientRequest tokenRequest = OAuthClientRequest
+
+            OAuthClientRequest accessTokenRequest = OAuthClientRequest
                     .tokenLocation(CcpEveSsoOAuth2Config.CCP_EVE_SSO_OAUTH2_ENDPOINT_TOKEN_URI)
                     .setGrantType(GrantType.AUTHORIZATION_CODE)
-                    .setClientId(CcpEveSsoOAuth2Config.DRTTI_CCP_EVE_SSO_OAUTH2_CLIENT_ID)
-                    .setClientSecret(CcpEveSsoOAuth2Config.DRTTI_CCP_EVE_SSO_OAUTH2_CLIENT_SECRET)
                     .setCode(authResponse.getCode())
                     .buildQueryMessage();
+            accessTokenRequest.setHeader("Authorization", "Basic " + buildDrttiHttpAuthenticationHeader());
 
             OAuthClient oAuthClient = new OAuthClient(new URLConnectionClient());
-            OAuthAccessTokenResponse tokenResponse = oAuthClient.accessToken(tokenRequest);
-            storeCredential(tokenResponse);
+            OAuthAccessTokenResponse accessTokenResponse = oAuthClient.accessToken(accessTokenRequest, OAuth.HttpMethod.POST);
+
+            return buildCredentialFromTokenResponse(accessTokenResponse);
 
         } catch (OAuthSystemException oase) {
             log.error(CcpEveSsoOAuth2Config.EXCEPTION_OAUTH2_SYSTEM, oase);
+            return null;
         } catch (OAuthProblemException oape) {
             log.error(CcpEveSsoOAuth2Config.EXCEPTION_OAUTH2_PROBLEM, oape);
+            return null;
         }
     }
 
-    private void refreshAccessToken() {
+    public CcpEveSsoOAuth2Credential refreshAccessToken(CcpEveSsoOAuth2Credential credential) {
         try {
-            OAuthClientRequest refreshRequest = OAuthClientRequest
+
+            OAuthClientRequest refreshTokenRequest = OAuthClientRequest
                     .tokenLocation(CcpEveSsoOAuth2Config.CCP_EVE_SSO_OAUTH2_ENDPOINT_TOKEN_URI)
                     .setGrantType(GrantType.REFRESH_TOKEN)
-                    .setClientId(CcpEveSsoOAuth2Config.DRTTI_CCP_EVE_SSO_OAUTH2_CLIENT_ID)
-                    .setClientSecret(CcpEveSsoOAuth2Config.DRTTI_CCP_EVE_SSO_OAUTH2_CLIENT_SECRET)
                     .setRefreshToken(credential.getRefreshToken())
                     .buildQueryMessage();
+            refreshTokenRequest.setHeader("Authorization", buildDrttiHttpAuthenticationHeader());
 
             OAuthClient oAuthClient = new OAuthClient(new URLConnectionClient());
-            OAuthAccessTokenResponse refreshResponse = oAuthClient.accessToken(refreshRequest);
-            storeCredential(refreshResponse);
+            OAuthAccessTokenResponse refreshTokenResponse = oAuthClient.accessToken(refreshTokenRequest, OAuth.HttpMethod.POST);
+
+            return buildCredentialFromTokenResponse(refreshTokenResponse);
 
         } catch (OAuthSystemException oase) {
             log.error(CcpEveSsoOAuth2Config.EXCEPTION_OAUTH2_SYSTEM, oase);
+            return null;
         } catch (OAuthProblemException oape) {
             log.error(CcpEveSsoOAuth2Config.EXCEPTION_OAUTH2_PROBLEM, oape);
+            return null;
         }
     }
 
-    public String crestGetAuthenticatedPilot() {
+    // TODO: move this to a separate CREST Bean, or fix the endpoint/Config name so that it's the OAuth Verify endpoint
+    public String crestGetAuthenticatedPilot(CcpEveSsoOAuth2Credential credential) {
         try {
 
-            if (credential.isExpired())  {
-                refreshAccessToken();
-            }
-            OAuthClientRequest crestBearer = new OAuthBearerClientRequest(CcpEveSsoOAuth2Config.CREST_VERIFY_ENDPOINT)
+            OAuthClientRequest crestBearerRequest = new OAuthBearerClientRequest(CcpEveSsoOAuth2Config.CREST_VERIFY_ENDPOINT)
                     .setAccessToken(credential.getAccessToken()).buildQueryMessage();
 
             OAuthClient crestClient = new OAuthClient(new URLConnectionClient());
-            OAuthResourceResponse crestResponse = crestClient.resource(crestBearer, OAuth.HttpMethod.GET, OAuthResourceResponse.class);
+            OAuthResourceResponse crestResponse = crestClient.resource(crestBearerRequest, OAuth.HttpMethod.GET, OAuthResourceResponse.class);
             return crestResponse.getBody();
 
         } catch (OAuthSystemException oase) {
@@ -178,18 +148,14 @@ public class CcpEveSsoOAuth2SessionBean {
         }
     }
 
-    private void storeCredential(OAuthAccessTokenResponse tokenResponse) {
-        credential.setOrReset(tokenResponse.getAccessToken(), tokenResponse.getTokenType(), tokenResponse.getExpiresIn(), tokenResponse.getRefreshToken());
+    private CcpEveSsoOAuth2Credential buildCredentialFromTokenResponse(OAuthAccessTokenResponse tokenResponse) {
+        return new CcpEveSsoOAuth2Credential(tokenResponse.getAccessToken(), tokenResponse.getTokenType(), tokenResponse.getExpiresIn(), tokenResponse.getRefreshToken());
     }
 
-    public boolean isAuthenticated() {
-        return credential.isAuthenticated();
-    }
-
-    @Remove
-    public void remove() {
-        this.credential = null;
-        this.session = null;
+    private String buildDrttiHttpAuthenticationHeader() {
+        Base64.Encoder b64 = Base64.getEncoder();
+        String ssoClientSecret = CcpEveSsoOAuth2Config.DRTTI_CCP_EVE_SSO_OAUTH2_CLIENT_ID + ":" + CcpEveSsoOAuth2Config.DRTTI_CCP_EVE_SSO_OAUTH2_CLIENT_SECRET;
+        return "Basic " + b64.encodeToString(ssoClientSecret.getBytes());
     }
 
 }

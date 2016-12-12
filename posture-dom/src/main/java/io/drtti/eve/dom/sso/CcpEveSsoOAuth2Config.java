@@ -5,6 +5,11 @@ package io.drtti.eve.dom.sso;
  */
 public class CcpEveSsoOAuth2Config {
 
+    // HttpSession variable
+    // TODO: put these in a web config class or something
+    public final static String DRTTI_EVE_CREDENTIAL_COOKIE_KEY = "CcpEveSsoOAuth2Credential";
+    public final static String DRTTI_EVE_PILOT_NAME_COOKIE_KEY = "AuthenticatedPilotName";
+
     // OAuth2 authorize endpoint configuration constants (application-independent)
     public final static String CCP_EVE_SSO_OAUTH2_ENDPOINT_AUTH_URI = "https://login.eveonline.com/oauth/authorize/";
     public final static String CCP_EVE_SSO_OAUTH2_ENDPOINT_AUTH_RESPONSE_TYPE = "code";

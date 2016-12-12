@@ -1,7 +1,5 @@
 package io.drtti.eve.dom.sso;
 
-import javax.enterprise.context.SessionScoped;
-import java.io.Serializable;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
@@ -11,8 +9,7 @@ import java.time.temporal.ChronoUnit;
  *
  * @author cwinebrenner
  */
-@SessionScoped
-public class CcpEveSsoOAuth2Credential implements Serializable {
+public class CcpEveSsoOAuth2Credential {
 
     private String accessToken;
     private String tokenType;
@@ -27,11 +24,6 @@ public class CcpEveSsoOAuth2Credential implements Serializable {
     }
 
     public CcpEveSsoOAuth2Credential(String accessToken, String tokenType, Long expiresIn, String refreshToken) {
-        setOrReset(accessToken, tokenType, expiresIn, refreshToken);
-        this.authenticated = true;
-    }
-
-    public void setOrReset(String accessToken, String tokenType, Long expiresIn, String refreshToken) {
         this.accessToken = accessToken;
         this.tokenType = tokenType;
         this.expiresIn = expiresIn;

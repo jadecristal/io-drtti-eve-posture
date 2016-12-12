@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>drtti.io</title>
+    <title>drtti.io Home</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=GFS+Didot|Tinos|Tangerine" />
     <link rel="stylesheet" href="css/main.css" />
 </head>
@@ -17,7 +17,7 @@
 </div>
 <div class="f-center">
     <p class="t-center">
-        <a href="/ccp/eve/sso/"><img src="image/ccp-eve-sso.png" /></a>
+        <% out.print("Welcome, " + request.getSession().getAttribute("AuthenticatedPilotName")); %>
     </p>
 </div>
 </body>
