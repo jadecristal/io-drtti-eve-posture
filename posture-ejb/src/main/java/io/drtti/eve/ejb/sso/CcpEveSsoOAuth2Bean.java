@@ -53,7 +53,7 @@ public class CcpEveSsoOAuth2Bean {
                     .authorizationLocation(CcpEveSsoOAuth2Config.CCP_EVE_SSO_OAUTH2_ENDPOINT_AUTH_URI)
                     .setParameter("response_type", CcpEveSsoOAuth2Config.CCP_EVE_SSO_OAUTH2_ENDPOINT_AUTH_RESPONSE_TYPE)
                     .setRedirectURI(CcpEveSsoOAuth2Config.DRTTI_CCP_EVE_SSO_OAUTH2_CALLBACK_URI)
-                    .setClientId(CcpEveSsoOAuth2Config.DRTTI_CCP_EVE_SSO_OAUTH2_CLIENT_ID)
+                    .setClientId(CcpEveSsoOAuth2Config.getClientId())
                     .setState(session.getId())  // TODO: Harden state value more
                     .setParameter("scope", CcpEveSsoOAuth2Config.CCP_EVE_SSO_OAUTH2_SCOPES_ESI)
                     .buildQueryMessage();
@@ -164,7 +164,7 @@ public class CcpEveSsoOAuth2Bean {
 
     private String buildDrttiHttpAuthenticationHeader() {
         Base64.Encoder b64 = Base64.getEncoder();
-        String ssoClientSecret = CcpEveSsoOAuth2Config.DRTTI_CCP_EVE_SSO_OAUTH2_CLIENT_ID + ":" + CcpEveSsoOAuth2Config.DRTTI_CCP_EVE_SSO_OAUTH2_CLIENT_SECRET;
+        String ssoClientSecret = CcpEveSsoOAuth2Config.getClientId() + ":" + CcpEveSsoOAuth2Config.getClientSecret();
         return "Basic " + b64.encodeToString(ssoClientSecret.getBytes());
     }
 
