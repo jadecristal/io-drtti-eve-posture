@@ -4,7 +4,8 @@ import io.drtti.eve.dom.ccp.Pilot;
 import io.drtti.eve.dom.ccp.SolarSystem;
 import io.drtti.eve.dom.core.ExpirableReport;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 
 /**
  * @author cwinebrenner
@@ -13,41 +14,40 @@ public class ReportedPilotLocation extends PilotLocation implements ExpirableRep
 
     private final static int EXPIRATION_POLICY_SECONDS = 600;
 
-    private LocalDateTime reportedTimeStamp;
+    private Instant reportedTimeStamp;
 
     public ReportedPilotLocation() {
     }
 
     public ReportedPilotLocation(Pilot pilot, SolarSystem solarSystem) {
         super(pilot, solarSystem);
-        this.reportedTimeStamp = LocalDateTime.now();
+        this.reportedTimeStamp = Instant.now();
     }
 
-    public ReportedPilotLocation(Pilot pilot, SolarSystem solarSystem, LocalDateTime reportedTimeStamp) {
+    public ReportedPilotLocation(Pilot pilot, SolarSystem solarSystem, Instant reportedTimeStamp) {
         super(pilot, solarSystem);
         this.reportedTimeStamp = reportedTimeStamp;
     }
 
     public ReportedPilotLocation(PilotLocation pilotLocation) {
         super(pilotLocation.getPilot(), pilotLocation.getSolarSystem());
-        this.reportedTimeStamp = LocalDateTime.now();
+        this.reportedTimeStamp = Instant.now();
     }
 
     public PilotLocation getPilotLocation() {
         return new PilotLocation(this.getPilot(), this.getSolarSystem());
     }
 
-    public LocalDateTime getReportedTimeStamp() {
+    public Instant getReportedTimeStamp() {
         return reportedTimeStamp;
     }
 
-    public void setReportedTimeStamp(LocalDateTime reportedTimeStamp) {
+    public void setReportedTimeStamp(Instant reportedTimeStamp) {
         this.reportedTimeStamp = reportedTimeStamp;
     }
 
     public boolean isExpired() {
-        // TODO: check the reported timeStamp + EXPIRATION_POLICY_SECONDS against the current date/time
-        return false;
+        return (ChronoUnit.SECONDS.between(reportedTimeStamp, Instant.now()) > EXPIRATION_POLICY_SECONDS);
     }
 
 }

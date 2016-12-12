@@ -1,14 +1,14 @@
 package io.drtti.eve.dom.core;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 /**
  * @author cwinebrenner
  */
 public interface ExpirableReport {
 
-    public LocalDateTime getReportedTimeStamp();
-    public void setReportedTimeStamp(LocalDateTime reportedTimeStamp);
+    public Instant getReportedTimeStamp();
+    public void setReportedTimeStamp(Instant reportedTimeStamp);
     public boolean isExpired();
 
 }
