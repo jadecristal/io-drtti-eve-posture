@@ -11,7 +11,7 @@
 
 <body>
 <p class="f-corner a">&alpha;</p>
-<p class="f-corner o">&Omega;</p>
+<p class="f-corner o"><a href="/ccp/eve/sso/logout/">&Omega;</a></p>
 <div class="f-center">
     <p class="h-main"><strong>d</strong>istributed <strong>r</strong>eal<strong>t</strong>ime <strong>t</strong>arget <strong>i</strong>ntelligence</p>
 </div>

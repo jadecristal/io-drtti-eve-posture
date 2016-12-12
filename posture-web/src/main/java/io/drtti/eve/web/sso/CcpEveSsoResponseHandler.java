@@ -39,6 +39,8 @@ public class CcpEveSsoResponseHandler extends HttpServlet {
                 log.info("Saved credential in Session");
                 request.getSession().setAttribute(CcpEveSsoOAuth2Config.DRTTI_EVE_PILOT_NAME_COOKIE_KEY, ssoBean.crestGetAuthenticatedPilot(credential));
                 log.info("Saved authenticated pilot name in Session");
+                log.info("CCP EVE SSO Auth Callback processed; redirecting to home...");
+                response.sendRedirect(request.getContextPath() + "/home.jsp");
             } else {
                 log.info("No CCP EVE SSO Auth callback found in request; redirecting to SSO endpoint...");
                 response.sendRedirect(ssoBean.getAuthRequestURI(request.getSession()));

@@ -19,6 +19,7 @@ public class CcpEveSsoOAuth2Config {
     public final static String CCP_EVE_SSO_OAUTH2_SCOPES = "characterLocationRead";
 
     // OAuth2 application configuration constants (application-dependent)
+    public final static String DRTTI_CCP_EVE_CONTACT_WITH_PROBLEMS = "jadecristal@gmail.com";
     public final static String DRTTI_CCP_EVE_SSO_OAUTH2_CLIENT_ID = "61925ed48911466bbc5f2072858bf2e0";
     public final static String DRTTI_CCP_EVE_SSO_OAUTH2_CLIENT_SECRET = "0DMac5ePX1dKYIMdG0k1xnxrP0I2oOL5qHNr4u0p";
     public final static String DRTTI_CCP_EVE_SSO_OAUTH2_CALLBACK_URI = "https://drtti.io/ccp/eve/sso/";
@@ -27,7 +28,7 @@ public class CcpEveSsoOAuth2Config {
     public final static String EXCEPTION_OAUTH2_SYSTEM = "EXCEPTION_OAUTH2_SYSTEM";
     public final static String EXCEPTION_OAUTH2_PROBLEM = "EXCEPTION_OAUTH2_PROBLEM";
 
-    // CREST verification
-    public final static String CREST_VERIFY_ENDPOINT = "https://login.eveonline.com/oauth/authorize/";
+    // OAuth2 verify endpoint
+    public final static String CCP_EVE_SSO_OAUTH2_ENDPOINT_VERIFY = "https://login.eveonline.com/oauth/verify/";
 
 }

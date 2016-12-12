@@ -3,7 +3,7 @@
 
     <Properties>
         <Property name="pattern.default">%d %-4r [%t] %-5p %c %x - %m%n</Property>
-        <Property name="logs.wildfly">$${env:WILDFLY_HOME}/standalone/log</Property>
+        <Property name="logs.wildfly">$${env:JBOSS_HOME}/standalone/log</Property>
         <Property name="logs.filename">io-drtti-DOM-eve.log</Property>
     </Properties>
 

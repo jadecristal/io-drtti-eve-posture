@@ -55,7 +55,7 @@ public class CcpEveSsoOAuth2Bean {
                     .setRedirectURI(CcpEveSsoOAuth2Config.DRTTI_CCP_EVE_SSO_OAUTH2_CALLBACK_URI)
                     .setClientId(CcpEveSsoOAuth2Config.DRTTI_CCP_EVE_SSO_OAUTH2_CLIENT_ID)
                     .setState(session.getId())  // TODO: Harden state value more
-                    .setParameter("scopes", CcpEveSsoOAuth2Config.CCP_EVE_SSO_OAUTH2_SCOPES)
+                    .setParameter("scope", CcpEveSsoOAuth2Config.CCP_EVE_SSO_OAUTH2_SCOPES)
                     .buildQueryMessage();
             return authRequest.getLocationUri();
 
@@ -87,8 +87,11 @@ public class CcpEveSsoOAuth2Bean {
                     .tokenLocation(CcpEveSsoOAuth2Config.CCP_EVE_SSO_OAUTH2_ENDPOINT_TOKEN_URI)
                     .setGrantType(GrantType.AUTHORIZATION_CODE)
                     .setCode(authResponse.getCode())
-                    .buildQueryMessage();
-            accessTokenRequest.setHeader("Authorization", "Basic " + buildDrttiHttpAuthenticationHeader());
+                    .buildBodyMessage();
+
+            accessTokenRequest.setHeader("X-CCP-EVE-Contact-With-Problems", CcpEveSsoOAuth2Config.DRTTI_CCP_EVE_CONTACT_WITH_PROBLEMS);
+            accessTokenRequest.setHeader("Content-Type", "application/x-www-form-urlencoded");
+            accessTokenRequest.setHeader("Authorization", buildDrttiHttpAuthenticationHeader());
 
             OAuthClient oAuthClient = new OAuthClient(new URLConnectionClient());
             OAuthAccessTokenResponse accessTokenResponse = oAuthClient.accessToken(accessTokenRequest, OAuth.HttpMethod.POST);
@@ -111,7 +114,10 @@ public class CcpEveSsoOAuth2Bean {
                     .tokenLocation(CcpEveSsoOAuth2Config.CCP_EVE_SSO_OAUTH2_ENDPOINT_TOKEN_URI)
                     .setGrantType(GrantType.REFRESH_TOKEN)
                     .setRefreshToken(credential.getRefreshToken())
-                    .buildQueryMessage();
+                    .buildBodyMessage();
+
+            refreshTokenRequest.setHeader("X-CCP-EVE-Contact-With-Problems", CcpEveSsoOAuth2Config.DRTTI_CCP_EVE_CONTACT_WITH_PROBLEMS);
+            refreshTokenRequest.setHeader("Content-Type", "application/x-www-form-urlencoded");
             refreshTokenRequest.setHeader("Authorization", buildDrttiHttpAuthenticationHeader());
 
             OAuthClient oAuthClient = new OAuthClient(new URLConnectionClient());
@@ -132,8 +138,12 @@ public class CcpEveSsoOAuth2Bean {
     public String crestGetAuthenticatedPilot(CcpEveSsoOAuth2Credential credential) {
         try {
 
-            OAuthClientRequest crestBearerRequest = new OAuthBearerClientRequest(CcpEveSsoOAuth2Config.CREST_VERIFY_ENDPOINT)
-                    .setAccessToken(credential.getAccessToken()).buildQueryMessage();
+            OAuthClientRequest crestBearerRequest = new OAuthBearerClientRequest(CcpEveSsoOAuth2Config.CCP_EVE_SSO_OAUTH2_ENDPOINT_VERIFY)
+                    .setAccessToken(credential.getAccessToken()).buildHeaderMessage();
+
+            crestBearerRequest.setHeader("X-CCP-EVE-Contact-With-Problems", CcpEveSsoOAuth2Config.DRTTI_CCP_EVE_CONTACT_WITH_PROBLEMS);
+            crestBearerRequest.setHeader("Authorization", credential.getTokenType() + " " + credential.getAccessToken());
+
 
             OAuthClient crestClient = new OAuthClient(new URLConnectionClient());
             OAuthResourceResponse crestResponse = crestClient.resource(crestBearerRequest, OAuth.HttpMethod.GET, OAuthResourceResponse.class);
