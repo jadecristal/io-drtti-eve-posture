@@ -20,6 +20,7 @@ public class CcpEveSsoOAuth2Config {
     public final static String CCP_EVE_SSO_OAUTH2_SCOPES_ESI = "esi-location.read_location.v1";
 
     // OAuth2 application configuration constants (application-dependent)
+    // If you're looking at a public GitHub repo, these are already invalid-don't bother.
     public final static String DRTTI_CCP_EVE_CONTACT_WITH_PROBLEMS = "jadecristal@gmail.com";
     public final static String DRTTI_CCP_EVE_SSO_OAUTH2_CLIENT_ID = "61925ed48911466bbc5f2072858bf2e0";
     public final static String DRTTI_CCP_EVE_SSO_OAUTH2_CLIENT_SECRET = "0DMac5ePX1dKYIMdG0k1xnxrP0I2oOL5qHNr4u0p";
