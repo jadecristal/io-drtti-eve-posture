@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!-- TODO: try to add XMLNS, XSD to this -->
 <jboss-deployment-structure>
+    <!-- TODO: try to add XMLNS, XSD to this -->
     <deployment>
         <exclusions>
             <module name="org.jboss.resteasy.resteasy-jackson-provider"/>

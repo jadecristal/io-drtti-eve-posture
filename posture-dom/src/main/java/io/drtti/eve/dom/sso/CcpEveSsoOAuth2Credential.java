@@ -36,11 +36,11 @@ public class CcpEveSsoOAuth2Credential implements Serializable {
         this.tokenType = tokenType;
         this.expiresIn = expiresIn;
         this.refreshToken = refreshToken;
-        touchCreateUpdateInstant();
+        touchCredentialInstant();
         this.authenticated = true;
     }
 
-    private void touchCreateUpdateInstant() {
+    private void touchCredentialInstant() {
         this.credentialCreateUpdateInstant = Instant.now();
     }
 

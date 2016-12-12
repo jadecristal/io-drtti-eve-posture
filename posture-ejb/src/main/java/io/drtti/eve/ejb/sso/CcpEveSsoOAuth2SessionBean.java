@@ -58,6 +58,12 @@ public class CcpEveSsoOAuth2SessionBean {
         if (this.session == null) {
             this.session = session;
         }
+        if (this.credential == null) {
+            credential = (CcpEveSsoOAuth2Credential)session.getAttribute("CcpEveSsoOAuth2Credential");
+            if (credential == null) {
+                credential = new CcpEveSsoOAuth2Credential();
+            }
+        }
     }
 
     /**

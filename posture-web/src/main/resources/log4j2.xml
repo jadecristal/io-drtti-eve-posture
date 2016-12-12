@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Configuration name="io-drtti-eve-EJB-logger" strict="true" status="INFO" monitorInternal="5">
+<Configuration name="io-drtti-eve-WEB-logger" strict="true" status="INFO" monitorInternal="5">
 
     <Properties>
         <Property name="pattern.default">%d %-4r [%t] %-5p %c %x - %m%n</Property>
         <Property name="logs.wildfly">$${env:WILDFLY_HOME}/standalone/log</Property>
-        <Property name="logs.filename">io-drtti-EJB-eve.log</Property>
+        <Property name="logs.filename">io-drtti-WEB-eve.log</Property>
     </Properties>
 
     <Appenders>

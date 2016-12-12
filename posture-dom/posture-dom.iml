@@ -14,7 +14,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="" />
         <datasource-mapping>
-          <factory-entry name="drtti-eve" value="d7583f39-9989-4e84-a676-9c667d341326" />
+          <factory-entry name="drtti-eve" value="efa898b8-1750-4ac3-a71d-d8cbdce71f80" />
         </datasource-mapping>
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/resources/META-INF/persistence.xml" />
       </configuration>
