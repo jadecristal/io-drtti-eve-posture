@@ -46,7 +46,7 @@ public class CcpEveSsoResponseHandler extends HttpServlet {
                 response.sendRedirect(ssoBean.getAuthRequestURI(request.getSession()));
             }
         } else {
-            log.info("Direct access to CCP EVE SSO Callback endpoint; redirecting to home...");
+            log.info("Direct access to CCP EVE SSO Callback endpoint while already logged in; redirecting to home...");
             response.sendRedirect(request.getContextPath() + "/home.jsp");
         }
     }

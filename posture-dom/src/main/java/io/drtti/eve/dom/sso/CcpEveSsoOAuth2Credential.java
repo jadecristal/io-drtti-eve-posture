@@ -1,5 +1,7 @@
 package io.drtti.eve.dom.sso;
 
+import javax.enterprise.context.SessionScoped;
+import java.io.Serializable;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
@@ -9,7 +11,8 @@ import java.time.temporal.ChronoUnit;
  *
  * @author cwinebrenner
  */
-public class CcpEveSsoOAuth2Credential {
+@SessionScoped
+public class CcpEveSsoOAuth2Credential implements Serializable {
 
     private String accessToken;
     private String tokenType;
