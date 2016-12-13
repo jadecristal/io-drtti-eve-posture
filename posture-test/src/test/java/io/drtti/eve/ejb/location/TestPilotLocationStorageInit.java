@@ -18,19 +18,19 @@ public class TestPilotLocationStorageInit {
     private final static String EJB_POST_CONSTRUCT_METHOD = "startup";
     private final static String EJB_PRE_DESTROY_METHOD = "shutdown";
 
-    private static PilotLocationStorage pls;
+    private static PilotLocationStorageBean pls;
 
     // Directly use a noted method name rather than fully scanning the class with reflection to find @PostConstruct
     // Scan for annotations like: http://stackoverflow.com/questions/6593597/java-seek-a-method-with-specific-annotation-and-its-annotation-element
     @BeforeClass
     public static void initPilotLocationStorage() throws Exception {
 
-        log.info("Creating instance of EJB PilotLocationStorage for initialization testing...");
-        pls = new PilotLocationStorage();
+        log.info("Creating instance of EJB PilotLocationStorageBean for initialization testing...");
+        pls = new PilotLocationStorageBean();
 
         log.info("Simulating @PostConstruct...");
         log.debug("- Locating specified @PostConstruct method '" + EJB_POST_CONSTRUCT_METHOD + "'...");
-        Class<PilotLocationStorage> clazz = PilotLocationStorage.class;
+        Class<PilotLocationStorageBean> clazz = PilotLocationStorageBean.class;
         Method plsEjbPostConstruct = clazz.getDeclaredMethod(EJB_POST_CONSTRUCT_METHOD);
         log.debug("- Setting private @PostConstruct method accessible...");
         plsEjbPostConstruct.setAccessible(true);

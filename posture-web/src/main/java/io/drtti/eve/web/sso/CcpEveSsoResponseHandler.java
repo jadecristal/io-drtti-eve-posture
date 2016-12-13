@@ -1,8 +1,13 @@
 package io.drtti.eve.web.sso;
 
-import io.drtti.eve.dom.sso.CcpEveSsoOAuth2Config;
-import io.drtti.eve.dom.sso.CcpEveSsoOAuth2Credential;
-import io.drtti.eve.ejb.sso.CcpEveSsoOAuth2Bean;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.drtti.eve.dom.esi.EsiCharacterLocation;
+import io.drtti.eve.dom.esi.EsiSolarSystem;
+import io.drtti.eve.dom.sso.CcpEveSsoAuthenticatedPilot;
+import io.drtti.eve.dom.sso.CcpEveSsoConfig;
+import io.drtti.eve.dom.sso.CcpEveSsoCredential;
+import io.drtti.eve.ejb.esi.CcpEveEsiBean;
+import io.drtti.eve.ejb.sso.CcpEveSsoBean;
 import org.apache.log4j.Logger;
 
 import javax.ejb.EJB;
@@ -29,24 +34,51 @@ public class CcpEveSsoResponseHandler extends HttpServlet {
     private final Logger log = Logger.getLogger(this.getClass());
 
     @EJB
-    CcpEveSsoOAuth2Bean ssoBean;
+    CcpEveSsoBean ssoBean;
+
+    @EJB
+    CcpEveEsiBean esiBean;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        CcpEveSsoOAuth2Credential credential = (CcpEveSsoOAuth2Credential) request.getSession().getAttribute(CcpEveSsoOAuth2Config.DRTTI_EVE_CREDENTIAL_COOKIE_KEY);
+        CcpEveSsoCredential credential = (CcpEveSsoCredential) request.getSession().getAttribute(CcpEveSsoConfig.DRTTI_EVE_SSO_CREDENTIAL_KEY);
 
         if (credential == null) {
             log.info("No credential found in Session");
             if (ssoBean.containsAuthCallback(request)) {
-                log.info("Found CCP EVE SSO Auth Callback in request; processing...");
-                credential = ssoBean.processAuthCallback(request);
-                log.info("Got credential from CCP EVE SSO endpoint");
-                request.getSession().setAttribute(CcpEveSsoOAuth2Config.DRTTI_EVE_CREDENTIAL_COOKIE_KEY, credential);
-                log.info("Saved credential in Session");
-                request.getSession().setAttribute(CcpEveSsoOAuth2Config.DRTTI_EVE_PILOT_NAME_COOKIE_KEY, jsonPrettyPrint(ssoBean.crestGetAuthenticatedPilot(credential)));
-                log.info("Saved authenticated pilot name in Session");
-                log.info("CCP EVE SSO Auth Callback processed; redirecting to home...");
-                response.sendRedirect(request.getContextPath() + "/home.jsp");
+                try {
+                    log.info("Found CCP EVE SSO Auth Callback in request; processing...");
+
+                    credential = ssoBean.processAuthCallback(request);
+                    log.info("Got credential from CCP EVE SSO endpoint");
+
+                    request.getSession().setAttribute(CcpEveSsoConfig.DRTTI_EVE_SSO_CREDENTIAL_KEY, credential);
+                    log.info("Saved credential in Session");
+
+                    String authenticatedPilotJson = ssoBean.getAuthenticatedPilot(credential);
+                    log.info("Got authenticated pilot from CCP EVE SSO verify endpoint");
+
+                    request.getSession().setAttribute(CcpEveSsoConfig.DRTTI_EVE_AUTHENTICATED_PILOT_KEY, jsonPrettyPrint(authenticatedPilotJson));
+                    log.info("Saved authenticated pilot JSON in Session");
+
+                    ObjectMapper om = new ObjectMapper();
+                    CcpEveSsoAuthenticatedPilot authenticatedPilot = om.readValue(authenticatedPilotJson, CcpEveSsoAuthenticatedPilot.class);
+                    log.info("ObjectMapper: mapped CcpEveSsoAuthenticatedPilot: " + authenticatedPilot.getCharacterId() + "," + authenticatedPilot.getCharacterName());
+
+                    request.getSession().setAttribute(CcpEveSsoConfig.DRTTI_EVE_PILOT_NAME_KEY, authenticatedPilot.getCharacterName());
+                    log.info("Saved authenticated pilot name in Session as " + CcpEveSsoConfig.DRTTI_EVE_PILOT_NAME_KEY);
+
+                    // TODO: move this somewhere else
+                    EsiCharacterLocation esiCharacterLocation = esiBean.getCharacterLocation(credential, authenticatedPilot.getCharacterId());
+                    EsiSolarSystem esiSolarSystem = esiBean.getSolarSystem(esiCharacterLocation.getSolarSystemId());
+                    request.getSession().setAttribute(CcpEveSsoConfig.DRTTI_EVE_PILOT_LOCATION_KEY, esiSolarSystem.getSolarSystemName());
+                    log.info("Saved authenticated pilot location solar system name in Session as " + CcpEveSsoConfig.DRTTI_EVE_PILOT_LOCATION_KEY);
+
+                    log.info("CCP EVE SSO Auth Callback processed; redirecting to home...");
+                    response.sendRedirect(request.getContextPath() + "/home.jsp");
+                } catch (IOException e) {
+                    log.error(e);
+                }
             } else {
                 log.info("No CCP EVE SSO Auth callback found in request; redirecting to SSO endpoint...");
                 response.sendRedirect(ssoBean.getAuthRequestURI(request.getSession()));

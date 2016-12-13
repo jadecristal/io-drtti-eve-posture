@@ -26,7 +26,7 @@ public class TestPilotLocationStorage {
     private final static String CCP_EVE_SOLAR_SYSTEM_HUB = "Jita";
     private final static String CCP_EVE_SOLAR_SYSTEM_HOME = "G-B22J";
 
-    private static PilotLocationStorage pls;
+    private static PilotLocationStorageBean pls;
     private static Pilot pilot;
     private static SolarSystem solarSystem;
     private static PilotLocation pilotLocation;
@@ -34,12 +34,12 @@ public class TestPilotLocationStorage {
     // Directly use a noted method name rather than fully scanning the class with reflection to find @PostConstruct
     @BeforeClass
     public static void initPilotLocationStorage() throws Exception {
-        log.info("Creating instance of EJB PilotLocationStorage for testing...");
+        log.info("Creating instance of EJB PilotLocationStorageBean for testing...");
 
-        pls = new PilotLocationStorage();
+        pls = new PilotLocationStorageBean();
 
         log.info("Simulating @PostConstruct in-container initialization...");
-        Class<PilotLocationStorage> clazz = PilotLocationStorage.class;
+        Class<PilotLocationStorageBean> clazz = PilotLocationStorageBean.class;
         Method plsEjbPostConstruct = clazz.getDeclaredMethod(EJB_POST_CONSTRUCT_METHOD);
         plsEjbPostConstruct.setAccessible(true);
         plsEjbPostConstruct.invoke(pls);

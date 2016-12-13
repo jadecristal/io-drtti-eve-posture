@@ -12,7 +12,7 @@ import java.time.temporal.ChronoUnit;
  * @author cwinebrenner
  */
 @SessionScoped
-public class CcpEveSsoOAuth2Credential implements Serializable {
+public class CcpEveSsoCredential implements Serializable {
 
     private String accessToken;
     private String tokenType;
@@ -22,17 +22,21 @@ public class CcpEveSsoOAuth2Credential implements Serializable {
     private Instant credentialCreateUpdateInstant;
     private boolean authenticated;
 
-    public CcpEveSsoOAuth2Credential() {
+    public CcpEveSsoCredential() {
         this.authenticated = false;
     }
 
-    public CcpEveSsoOAuth2Credential(String accessToken, String tokenType, Long expiresIn, String refreshToken) {
+    public CcpEveSsoCredential(String accessToken, String tokenType, Long expiresIn, String refreshToken) {
         this.accessToken = accessToken;
         this.tokenType = tokenType;
         this.expiresIn = expiresIn;
         this.refreshToken = refreshToken;
         touchCredentialInstant();
         this.authenticated = true;
+    }
+
+    public String getHttpAuthorizationHeader() {
+        return (isAuthenticated() && !isExpired()) ? tokenType + " " + accessToken : null;
     }
 
     private void touchCredentialInstant() {

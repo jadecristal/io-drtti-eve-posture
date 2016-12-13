@@ -20,7 +20,7 @@ import java.util.Set;
  */
 @Singleton
 @Startup
-public class PilotLocationStorage {
+public class PilotLocationStorageBean {
 
     private final Logger log = Logger.getLogger(this.getClass());
 
