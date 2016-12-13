@@ -66,7 +66,8 @@ public class CcpEveSsoResponseHandler extends HttpServlet {
                     log.info("ObjectMapper: mapped CcpEveSsoAuthenticatedPilot: " + authenticatedPilot.getCharacterId() + "," + authenticatedPilot.getCharacterName());
 
                     request.getSession().setAttribute(CcpEveSsoConfig.DRTTI_EVE_PILOT_NAME_KEY, authenticatedPilot.getCharacterName());
-                    log.info("Saved authenticated pilot name in Session as " + CcpEveSsoConfig.DRTTI_EVE_PILOT_NAME_KEY);
+                    request.getSession().setAttribute(CcpEveSsoConfig.DRTTI_EVE_PILOT_CHARACTER_ID_KEY, authenticatedPilot.getCharacterId());
+                    log.info("Saved authenticated pilot data in Session");
 
                     // TODO: move this somewhere else
                     EsiCharacterLocation esiCharacterLocation = esiBean.getCharacterLocation(credential, authenticatedPilot.getCharacterId());
@@ -104,8 +105,7 @@ public class CcpEveSsoResponseHandler extends HttpServlet {
 
             jw.writeObject(jo);
             jw.close();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error(e);
             return "javax.json PRETTY_PRINTING broke";
         }

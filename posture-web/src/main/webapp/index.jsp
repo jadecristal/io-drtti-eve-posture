@@ -10,8 +10,8 @@
 </head>
 
 <body>
-<p class="f-corner a"><a title="Care Factor" href="https://carefactor.org/">&alpha;</a></p>
-<p class="f-corner o"><a title="Logout of DRTTI" href="/ccp/eve/sso/logout/">&Omega;</a></p>
+<p class="f-corner a"><a class="nl" title="Care Factor" href="https://carefactor.org/">&alpha;</a></p>
+<p class="f-corner o"><a class="nl" title="Log out of DRTTI" href="/ccp/eve/sso/logout/">&Omega;</a></p>
 <div class="f-center">
     <p class="h-main"><strong>d</strong>istributed <strong>r</strong>eal<strong>t</strong>ime <strong>t</strong>arget <strong>i</strong>ntelligence</p>
 </div>

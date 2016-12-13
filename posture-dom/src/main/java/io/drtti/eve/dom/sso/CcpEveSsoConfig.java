@@ -7,6 +7,7 @@ public class CcpEveSsoConfig {
 
     // HttpSession variable
     public final static String DRTTI_EVE_SSO_CREDENTIAL_KEY = "CcpEveSsoCredential";
+    public final static String DRTTI_EVE_PILOT_CHARACTER_ID_KEY = "CharacterID";
     public final static String DRTTI_EVE_PILOT_NAME_KEY = "CharacterName";
     public final static String DRTTI_EVE_PILOT_LOCATION_KEY = "CharacterSolarSystemName";
     public final static String DRTTI_EVE_AUTHENTICATED_PILOT_KEY = "AuthenticatedPilot";
