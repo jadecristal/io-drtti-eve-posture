@@ -76,8 +76,8 @@ public class CcpEveSsoResponseHandler extends HttpServlet {
 
                     log.info("CCP EVE SSO Auth Callback processed; redirecting to home...");
                     response.sendRedirect(request.getContextPath() + "/home.jsp");
-                } catch (IOException e) {
-                    log.error(e);
+                } catch (IOException ioe) {
+                    log.error(ioe);
                 }
             } else {
                 log.info("No CCP EVE SSO Auth callback found in request; redirecting to SSO endpoint...");

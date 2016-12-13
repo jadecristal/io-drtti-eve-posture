@@ -10,10 +10,6 @@ import org.apache.log4j.Logger;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import javax.ws.rs.client.*;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
@@ -30,9 +26,6 @@ public class CcpEveEsiBean {
     private final static String ESI_BASE = "https://esi.tech.ccp.is/latest";
 
     private ObjectMapper om;
-
-    @PersistenceContext
-    EntityManager em;
 
     @EJB
     SolarSystemBean ssb;
@@ -54,33 +47,16 @@ public class CcpEveEsiBean {
 
     public EsiSolarSystem getSolarSystem(Long solarSystemId) {
 
-        // TODO: JPA DAO UNFUN
-        try {
+        SolarSystem cachedSolarSystem = ssb.getByCcpEveId(solarSystemId);
 
-            SolarSystem cachedSolarSystem = ssb.getByCcpEveId(solarSystemId);
-
-//            CriteriaBuilder cb = em.getCriteriaBuilder();
-//            CriteriaQuery cq = cb.createQuery();
-//
-//            Root<SolarSystem> s = cq.from(SolarSystem.class);
-//            cq.where(cb.equal(s.get("solarSystemId"), solarSystemId));  // class.field
-//            cq.select(s).where(cb.equal(s.get("solarSystemId"), solarSystemId));
-//
-//            TypedQuery<SolarSystem> tq = em.createQuery(cq);
-//            cachedSolarSystem = tq.getSingleResult();
-
-            return new EsiSolarSystem(cachedSolarSystem.getSolarSystemName());
-
-        } catch (NoResultException nre) {
-            log.info("SSB_NRE_EXCEPTION");
-            log.info(nre);
+        if (cachedSolarSystem == null) {
 
             try {
                 // look up SolarSystem, persist it, and return it
                 String esiResponseJson = esiCall(esiSolarSystemEndpointBuilder(solarSystemId));
                 EsiSolarSystem esiSolarSystem = om.readValue(esiResponseJson, EsiSolarSystem.class);
 
-                em.persist(new SolarSystem(solarSystemId, esiSolarSystem.getSolarSystemName()));
+                ssb.persist(new SolarSystem(solarSystemId, esiSolarSystem.getSolarSystemName()));
                 return esiSolarSystem;
 
             } catch (IOException ioe) {
@@ -88,6 +64,8 @@ public class CcpEveEsiBean {
                 return null;
             }
 
+        } else {
+            return new EsiSolarSystem(cachedSolarSystem.getSolarSystemName());
         }
     }
 

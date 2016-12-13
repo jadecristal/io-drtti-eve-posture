@@ -14,7 +14,7 @@ import java.util.HashMap;
  */
 @Singleton
 @Startup
-public class PilotPostureStorage {
+public class PilotPostureStorageBean {
 
     private HashMap<Pilot, Posture> pilotPosture;
 

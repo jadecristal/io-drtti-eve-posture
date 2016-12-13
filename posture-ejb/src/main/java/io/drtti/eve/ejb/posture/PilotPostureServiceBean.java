@@ -6,5 +6,5 @@ import javax.ejb.Stateless;
  * @author cwinebrenner
  */
 @Stateless
-public class PilotPostureService {
+public class PilotPostureServiceBean {
 }

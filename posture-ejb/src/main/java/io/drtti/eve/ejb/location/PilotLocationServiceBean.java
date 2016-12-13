@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Singleton
 @Startup
-public class PilotLocationService {
+public class PilotLocationServiceBean {
 
     private final Logger log = Logger.getLogger(this.getClass());
 

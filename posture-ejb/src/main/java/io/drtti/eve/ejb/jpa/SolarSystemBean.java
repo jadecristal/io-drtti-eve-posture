@@ -22,36 +22,57 @@ public class SolarSystemBean {
     EntityManager em;
 
     public SolarSystem getById(Long id) {
-        log.info("JPA DAO: Searching for SolarSystem with ID: " + id);
-        return em.find(SolarSystem.class, id);
+        try {
+            log.info("JPA DAO: Searching for SolarSystem with ID: " + id);
+            return em.find(SolarSystem.class, id);
+        } catch (Exception e) {
+            log.error(e);
+            return null;
+        }
     }
 
     public SolarSystem getByCcpEveId(Long ccpEveId) {
-        log.info("JPA DAO: Searching for SolarSystem with CCP EVE ID: " + ccpEveId);
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery cq = cb.createQuery();
+        try {
+            log.info("JPA DAO: Searching for SolarSystem with CCP EVE ID: " + ccpEveId);
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery cq = cb.createQuery();
 
-        Root<SolarSystem> r = cq.from(SolarSystem.class);
-        cq.select(r).where(cb.equal(r.get(CCP_EVE_ID_CLASS_FIELD), ccpEveId));
+            Root<SolarSystem> r = cq.from(SolarSystem.class);
+            cq.select(r).where(cb.equal(r.get(CCP_EVE_ID_CLASS_FIELD), ccpEveId));
 
-        TypedQuery<SolarSystem> tq = em.createQuery(cq);
-        return tq.getSingleResult();
+            TypedQuery<SolarSystem> tq = em.createQuery(cq);
+            return tq.getSingleResult();
+        } catch (Exception e) {
+            log.error(e);
+            return null;
+        }
     }
 
     public void removeById(Long id) {
         log.info("JPA DAO: Attempting to remove SolarSystem with ID: " + id);
         SolarSystem entity = getById(id);
-        remove(entity);
+        if (entity == null) {
+            log.error("JPA DAO: Failed to locate SolarSystem with ID: " + id + "; nothing to remove");
+        } else {
+            remove(entity);
+        }
     }
 
     public List<SolarSystem> getAll() {
-        log.info("JPA DAO: Searching for all SolarSystem");
-        CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+        try {
+            log.info("JPA DAO: Searching for all SolarSystem");
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
 
-        Root<SolarSystem> r = cq.from(SolarSystem.class);
-        cq.select(r);
-        TypedQuery<SolarSystem> tq = em.createQuery(cq);
-        return tq.getResultList();
+            Root<SolarSystem> r = cq.from(SolarSystem.class);
+            cq.select(r);
+            TypedQuery<SolarSystem> tq = em.createQuery(cq);
+            List<SolarSystem> resultList = tq.getResultList();
+
+            return (!resultList.isEmpty() ? resultList : null);
+        } catch (Exception e) {
+            log.error(e);
+            return null;
+        }
     }
 
     public void persist(SolarSystem entity) {
