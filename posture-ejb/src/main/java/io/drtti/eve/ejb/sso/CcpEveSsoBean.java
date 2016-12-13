@@ -26,9 +26,9 @@ import java.util.Base64;
  * The CCP EVE SSO OAuth2 flows are:
  * <p>
  * OAuth2 AUTHORIZATION FLOW:
- * User-Agent: Click triggers HTTPS GET to SSO-Endpoint-Auth using URI from getAuthRequestURI()
- * User-Agent: User authenticates and approves request at SSO-Endpoint-Auth
- * SSO-Endpoint-Auth: Redirects User-Agent to HTTPS GET to DRTTI callback URI with auth code
+ * DrttiUser-Agent: Click triggers HTTPS GET to SSO-Endpoint-Auth using URI from getAuthRequestURI()
+ * DrttiUser-Agent: DrttiUser authenticates and approves request at SSO-Endpoint-Auth
+ * SSO-Endpoint-Auth: Redirects DrttiUser-Agent to HTTPS GET to DRTTI callback URI with auth code
  * <p>
  * OAuth2 TOKEN FLOW
  * Bean: Makes HTTPS POST for user to SSO-Endpoint-Token asking for tokens with auth code

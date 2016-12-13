@@ -8,8 +8,8 @@ import io.drtti.eve.dom.ccp.SolarSystem;
  */
 public class PilotLocation {
 
-    private Pilot pilot;
-    private SolarSystem solarSystem;
+    Pilot pilot;
+    SolarSystem solarSystem;
 
     public PilotLocation() {
     }

@@ -3,6 +3,8 @@ package io.drtti.eve.dom.location;
 import io.drtti.eve.dom.ccp.Pilot;
 import io.drtti.eve.dom.ccp.SolarSystem;
 import io.drtti.eve.dom.core.ExpirableReport;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -48,6 +50,30 @@ public class ReportedPilotLocation extends PilotLocation implements ExpirableRep
 
     public boolean isExpired() {
         return (ChronoUnit.SECONDS.between(reportedTimeStamp, Instant.now()) > EXPIRATION_POLICY_SECONDS);
+    }
+
+    // Comparison/hashing methods/boilerplate from Apache Commons
+    // TODO: consider whether or not the Instant matters in equals/hashCode
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) { return false; }
+        if (o == this) { return true; }
+        if (o.getClass() != getClass()) {
+            return false;
+        }
+        ReportedPilotLocation rpl = (ReportedPilotLocation) o;
+        return new EqualsBuilder()
+                .append(pilot.getCharacterId(), rpl.getPilot().getCharacterId())
+                .append(solarSystem.getSolarSystemId(), rpl.getSolarSystem().getSolarSystemId())
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(637, 249)
+                .append(pilot.getCharacterId())
+                .append(solarSystem.getSolarSystemId())
+                .toHashCode();
     }
 
 }

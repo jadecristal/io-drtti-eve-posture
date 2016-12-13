@@ -6,6 +6,7 @@ package io.drtti.eve.dom.sso;
 public class CcpEveSsoConfig {
 
     // HttpSession variable
+    public final static String DRTTI_USER_KEY = "DrttiUser";
     public final static String DRTTI_EVE_SSO_CREDENTIAL_KEY = "CcpEveSsoCredential";
     public final static String DRTTI_EVE_PILOT_CHARACTER_ID_KEY = "CharacterID";
     public final static String DRTTI_EVE_PILOT_NAME_KEY = "CharacterName";

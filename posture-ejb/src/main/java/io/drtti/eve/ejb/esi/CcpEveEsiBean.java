@@ -34,7 +34,7 @@ public class CcpEveEsiBean {
         om = new ObjectMapper();
     }
 
-    public EsiCharacterLocation getCharacterLocation(CcpEveSsoCredential credential, Long characterId) {
+    public EsiCharacterLocation getEsiCharacterLocation(CcpEveSsoCredential credential, Long characterId) {
         try {
             String esiResponseJson = esiCallAuthenticated(esiLocationEndpointBuilder(characterId), credential);
             EsiCharacterLocation esiCharacterLocation = om.readValue(esiResponseJson, EsiCharacterLocation.class);
@@ -45,7 +45,7 @@ public class CcpEveEsiBean {
         }
     }
 
-    public EsiSolarSystem getSolarSystem(Long solarSystemId) {
+    public EsiSolarSystem getEsiSolarSystem(Long solarSystemId) {
 
         SolarSystem cachedSolarSystem = ssb.getByCcpEveId(solarSystemId);
 

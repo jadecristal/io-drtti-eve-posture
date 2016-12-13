@@ -11,8 +11,8 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author cwinebrenner
@@ -26,21 +26,22 @@ public class PilotLocationServiceBean {
     @EJB
     PilotLocationStorageBean pls;
 
-    private List<ReportedPilotLocation> rpls;
+    private Set<ReportedPilotLocation> rpls;
     // TODO: endpoint to receive updates on location?
     // TODO: get pilots in SolarSystem
     // TODO:FUTURE get pilots in Location
 
     @PostConstruct
     private void startup() {
-        log.debug("PostConstruct fired; starting up");
+        log.debug("PostConstruct fired; startup() called");
         log.info("Initializing ReportedPilotLocation storage");
-        rpls = new ArrayList<>();
+        rpls = new HashSet<>();
     }
 
     @PreDestroy
     private void shutdown() {
-        log.debug("PreDestroy fired; shutting down");
+        log.debug("PreDestroy fired; shutdown() called");
+        log.info("Shutting down ReportedPilotLocation storage");
     }
 
     @Schedule(hour = "*", minute = "*", second = "*/10")
