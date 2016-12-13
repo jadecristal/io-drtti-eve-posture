@@ -1,4 +1,4 @@
-package io.drtti.eve.dom.jpa;
+package io.drtti.eve.ejb.jpa;
 
 import io.drtti.eve.dom.ccp.SolarSystem;
 import org.apache.log4j.Logger;

@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.drtti.eve.dom.ccp.SolarSystem;
 import io.drtti.eve.dom.esi.EsiCharacterLocation;
 import io.drtti.eve.dom.esi.EsiSolarSystem;
-import io.drtti.eve.dom.jpa.SolarSystemBean;
 import io.drtti.eve.dom.sso.CcpEveSsoCredential;
+import io.drtti.eve.ejb.jpa.SolarSystemBean;
 import org.apache.log4j.Logger;
 
 import javax.ejb.EJB;
@@ -34,7 +34,8 @@ public class CcpEveEsiBean {
     @PersistenceContext
     EntityManager em;
 
-    @EJB SolarSystemBean ssb;
+    @EJB
+    SolarSystemBean ssb;
 
     public CcpEveEsiBean() {
         om = new ObjectMapper();

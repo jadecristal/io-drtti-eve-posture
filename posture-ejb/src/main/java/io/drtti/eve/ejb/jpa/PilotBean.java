@@ -1,4 +1,4 @@
-package io.drtti.eve.dom.jpa;
+package io.drtti.eve.ejb.jpa;
 
 import io.drtti.eve.dom.ccp.Pilot;
 import org.apache.log4j.Logger;
@@ -22,20 +22,30 @@ public class PilotBean {
     EntityManager em;
 
     public Pilot getById(Long id) {
-        log.info("JPA DAO: Searching for Pilot with ID: " + id);
-        return em.find(Pilot.class, id);
+        try {
+            log.info("JPA DAO: Searching for Pilot with ID: " + id);
+            return em.find(Pilot.class, id);
+        } catch (Exception e) {
+            log.error(e);
+            return null;
+        }
     }
 
     public Pilot getByCcpEveId(Long ccpEveId) {
-        log.info("JPA DAO: Searching for Pilot with CCP EVE ID: " + ccpEveId);
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery cq = cb.createQuery();
+        try {
+            log.info("JPA DAO: Searching for Pilot with CCP EVE ID: " + ccpEveId);
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery cq = cb.createQuery();
 
-        Root<Pilot> r = cq.from(Pilot.class);
-        cq.select(r).where(cb.equal(r.get(CCP_EVE_ID_CLASS_FIELD), ccpEveId));
+            Root<Pilot> r = cq.from(Pilot.class);
+            cq.select(r).where(cb.equal(r.get(CCP_EVE_ID_CLASS_FIELD), ccpEveId));
 
-        TypedQuery<Pilot> tq = em.createQuery(cq);
-        return tq.getSingleResult();
+            TypedQuery<Pilot> tq = em.createQuery(cq);
+            return tq.getSingleResult();
+        } catch (Exception e) {
+            log.error(e);
+            return null;
+        }
     }
 
     public void removeById(Long id) {
@@ -45,13 +55,18 @@ public class PilotBean {
     }
 
     public List<Pilot> getAll() {
-        log.info("JPA DAO: Searching for all Pilot");
-        CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+        try {
+            log.info("JPA DAO: Searching for all Pilot");
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
 
-        Root<Pilot> r = cq.from(Pilot.class);
-        cq.select(r);
-        TypedQuery<Pilot> tq = em.createQuery(cq);
-        return tq.getResultList();
+            Root<Pilot> r = cq.from(Pilot.class);
+            cq.select(r);
+            TypedQuery<Pilot> tq = em.createQuery(cq);
+            return tq.getResultList();
+        } catch (Exception e) {
+            log.error(e);
+            return null;
+        }
     }
 
     public void persist(Pilot entity) {
