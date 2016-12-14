@@ -11,11 +11,10 @@ import io.drtti.eve.dom.sso.CcpEveSsoCredential;
 import io.drtti.eve.ejb.client.DrttiUserRegistrationServiceBean;
 import io.drtti.eve.ejb.esi.CcpEveEsiBean;
 import io.drtti.eve.ejb.sso.CcpEveSsoBean;
+import io.drtti.eve.ejb.util.DrttiJson;
 import org.apache.log4j.Logger;
 
 import javax.ejb.EJB;
-import javax.json.*;
-import javax.json.stream.JsonGenerator;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,10 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author cwinebrenner
@@ -71,7 +66,7 @@ public class CcpEveSsoResponseHandler extends HttpServlet {
                     user.setPilot(new Pilot(authenticatedPilot.getCharacterId(), authenticatedPilot.getCharacterName()));
 
                     dursBean.register(user);
-                    log.info("Logged in user registered with ");
+                    log.info("Logged in user " + user.getPilot().getCharacterName() + " registered with DrttiUserRegistrationService");
 
                     request.getSession().setAttribute(CcpEveSsoConfig.DRTTI_USER_KEY, user);
                     log.debug("Logged in DrttiUser saved to session as " + CcpEveSsoConfig.DRTTI_USER_KEY);
@@ -83,7 +78,7 @@ public class CcpEveSsoResponseHandler extends HttpServlet {
                     log.debug("Saved user pilot location solar system name in Session as " + CcpEveSsoConfig.DRTTI_EVE_PILOT_LOCATION_KEY);
 
                     // TODO: Remove after other stuff is on the front page
-                    request.getSession().setAttribute(CcpEveSsoConfig.DRTTI_EVE_AUTHENTICATED_PILOT_KEY, jsonPrettyPrint(authenticatedPilotJson));
+                    request.getSession().setAttribute(CcpEveSsoConfig.DRTTI_EVE_AUTHENTICATED_PILOT_KEY, DrttiJson.jsonFormat(authenticatedPilotJson));
                     log.debug("Saved authenticated pilot JSON in Session");
 
                     log.debug("CCP EVE SSO Auth Callback processed; redirecting to home...");
@@ -104,27 +99,27 @@ public class CcpEveSsoResponseHandler extends HttpServlet {
         }
     }
 
-    // TODO: move to a utility class
-    private String jsonPrettyPrint(String json) {
-        StringWriter sw = new StringWriter();
-
-        try (JsonReader jr = Json.createReader(new StringReader(json))) {
-            JsonObject jo = jr.readObject();
-
-            Map<String, Object> jsonWriterProperties = new HashMap<>(1);
-            jsonWriterProperties.put(JsonGenerator.PRETTY_PRINTING, true);
-
-            JsonWriterFactory jwf = Json.createWriterFactory(jsonWriterProperties);
-            JsonWriter jw = jwf.createWriter(sw);
-
-            jw.writeObject(jo);
-            jw.close();
-        } catch (Exception e) {
-            log.error(e);
-            return "javax.json PRETTY_PRINTING broke";
-        }
-
-        return sw.toString();
-    }
+//    // TODO: move to a utility class
+//    private String jsonPrettyPrint(String json) {
+//        StringWriter sw = new StringWriter();
+//
+//        try (JsonReader jr = Json.createReader(new StringReader(json))) {
+//            JsonObject jo = jr.readObject();
+//
+//            Map<String, Object> jsonWriterProperties = new HashMap<>(1);
+//            jsonWriterProperties.put(JsonGenerator.PRETTY_PRINTING, true);
+//
+//            JsonWriterFactory jwf = Json.createWriterFactory(jsonWriterProperties);
+//            JsonWriter jw = jwf.createWriter(sw);
+//
+//            jw.writeObject(jo);
+//            jw.close();
+//        } catch (Exception e) {
+//            log.error(e);
+//            return "javax.json PRETTY_PRINTING broke";
+//        }
+//
+//        return sw.toString();
+//    }
 
 }

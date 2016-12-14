@@ -12,6 +12,7 @@ import javax.annotation.PreDestroy;
 import javax.ejb.*;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -74,6 +75,11 @@ public class PilotLocationServiceBean {
     private void processReportedPilotLocation(ReportedPilotLocation reportedPilotLocation) {
         rpls.add(reportedPilotLocation);
         pls.setPilotLocation(reportedPilotLocation.getPilotLocation());
+    }
+
+    // TODO: DEBUG remove this
+    public Map<Pilot, SolarSystem> DEBUG_getPilotSystem() {
+        return pls.DEBUG_getPilotSystem();
     }
 
 }

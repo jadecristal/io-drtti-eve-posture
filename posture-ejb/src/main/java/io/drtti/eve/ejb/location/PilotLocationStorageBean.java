@@ -11,9 +11,7 @@ import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author cwinebrenner
@@ -161,6 +159,14 @@ public class PilotLocationStorageBean {
      */
     public int getPilotCount() {
         return pilotSystem.size();
+    }
+
+    /**
+     * Debugging during testing
+     * @return frozen version of Map<Pilot,SolarSystem> pilotSystem
+     */
+    public Map<Pilot, SolarSystem> DEBUG_getPilotSystem() {
+        return Collections.unmodifiableMap(pilotSystem);
     }
 
 }

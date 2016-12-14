@@ -25,7 +25,13 @@ public class CcpEveSsoLogoutHandler extends HttpServlet {
     private final Logger log = Logger.getLogger(this.getClass());
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        dursBean.unregister((DrttiUser) request.getSession().getAttribute(CcpEveSsoConfig.DRTTI_USER_KEY));
+
+        DrttiUser user = (DrttiUser) request.getSession().getAttribute(CcpEveSsoConfig.DRTTI_USER_KEY);
+        if (user != null) {
+            dursBean.unregister(user);
+            log.info("Logged out user " + user.getPilot().getCharacterName() + " unregistered with DrttiUserRegistrationService");
+        }
+
         request.getSession().invalidate();
         response.sendRedirect(request.getContextPath() + "/index.jsp");
     }

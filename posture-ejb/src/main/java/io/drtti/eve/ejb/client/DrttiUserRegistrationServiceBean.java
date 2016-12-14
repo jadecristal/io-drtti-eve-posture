@@ -3,8 +3,10 @@ package io.drtti.eve.ejb.client;
 import io.drtti.eve.dom.core.DrttiUser;
 import io.drtti.eve.dom.sso.CcpEveSsoCredential;
 import io.drtti.eve.ejb.sso.CcpEveSsoBean;
+import org.apache.log4j.Logger;
 
 import javax.ejb.EJB;
+import javax.ejb.Schedule;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import java.util.Collections;
@@ -17,6 +19,8 @@ import java.util.Set;
 @Singleton
 @Startup
 public class DrttiUserRegistrationServiceBean {
+
+    private Logger log = Logger.getLogger(this.getClass());
 
     @EJB
     CcpEveSsoBean ssoBean;
@@ -45,14 +49,18 @@ public class DrttiUserRegistrationServiceBean {
         return (!users.isEmpty() ? Collections.unmodifiableSet(users) : null);
     }
 
+    @Schedule(hour = "*", minute = "*", second = "*/1")
     public void refreshRegisteredUsersExpiredCredentials() {
 
         if (users != null) {
             for (DrttiUser user : users) {
                 if (user.getCredential().isExpired()) {
+                    log.info("DrttiUserRegistrationService: Refreshing expired OAuth2 credential for " + user.getPilot().getCharacterName());
                     CcpEveSsoCredential refreshedCredential = ssoBean.refreshAccessToken(user.getCredential());
                     if (refreshedCredential != null) {
                         user.setCredential(refreshedCredential);
+                    } else {
+                        log.error("DrttiUserRegistrationService: FAILED refreshing expired OAuth2 credential for " + user.getPilot().getCharacterName());
                     }
                 }
             }

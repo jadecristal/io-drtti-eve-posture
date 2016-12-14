@@ -36,12 +36,14 @@ public class DrttiUserLocationMonitorServiceBean {
     @EJB
     private PilotLocationServiceBean plsBean;
 
+    @EJB
+    private DrttiUserLocationSocketServiceBean dulssBean;
+
     @Schedule(hour = "*", minute = "*", second = "*/10")
     // Endpoint cached for up to 5 seconds, per ESI (https://esi.tech.ccp.is/latest/#!/Location/get_characters_character_id_location)
     public void refreshDrttiUsersLocationFromEsi() {
 
         Set<DrttiUser> registeredUsers = dursBean.getRegisteredUsers();
-
 
         if (registeredUsers != null) {
 
@@ -53,6 +55,14 @@ public class DrttiUserLocationMonitorServiceBean {
                 plsBean.reportPilotLocation(new ReportedPilotLocation(user.getPilot(), userSolarSystem));
                 log.info("UserLocationMonitoring: ESI found " + user.getPilot().getCharacterName() + " in " + userSolarSystem.getSolarSystemName());
 
+            }
+
+            // TODO: DEBUG, remove this
+            try {
+                dulssBean.message(io.drtti.eve.ejb.util.DrttiJson.DEBUG_pilotSystemJson(plsBean.DEBUG_getPilotSystem()));
+            }
+            catch (Exception e) {
+                log.error(e);
             }
 
         }
