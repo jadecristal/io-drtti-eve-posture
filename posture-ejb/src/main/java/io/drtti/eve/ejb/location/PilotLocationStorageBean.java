@@ -161,12 +161,4 @@ public class PilotLocationStorageBean {
         return pilotSystem.size();
     }
 
-    /**
-     * Debugging during testing
-     * @return frozen version of Map<Pilot,SolarSystem> pilotSystem
-     */
-    public Map<Pilot, SolarSystem> DEBUG_getPilotSystem() {
-        return Collections.unmodifiableMap(pilotSystem);
-    }
-
 }

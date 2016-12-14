@@ -46,16 +46,15 @@
 <body>
 <p class="f-corner a"><a class="nl" title="Care Factor" href="https://carefactor.org/">&alpha;</a></p>
 <p class="f-corner o"><a class="nl" title="Log out of DRTTI" href="/ccp/eve/sso/logout/">&Omega;</a></p>
-<p class="f-corner user">
-    <img alt="<% out.print(user.getPilot().getCharacterName()); %> Portrait" src="https://imageserver.eveonline.com/Character/<% out.print(user.getPilot().getCharacterId()); %>_64.jpg" />
-    <% out.print(user.getPilot().getCharacterName()); %>&nbsp;[<a title="Log out" href="/ccp/eve/sso/logout/">Log out</a>]</p>
+
+<div class="f-corner user">
+    <img alt="<% out.print(user.getPilot().getCharacterName()); %> Portrait" src="https://imageserver.eveonline.com/Character/<% out.print(user.getPilot().getCharacterId()); %>_64.jpg" /><br />
+    <p><% out.print(user.getPilot().getCharacterName().replace(" ","&nbsp;")); %><br/>[<a title="Log out" href="/ccp/eve/sso/logout/">Log out</a>]</p>
+</div>
 <div class="f-center">
     <p class="h-main"><strong>d</strong>istributed <strong>r</strong>eal<strong>t</strong>ime <strong>t</strong>arget <strong>i</strong>ntelligence</p>
 </div>
 <div class="f-center">
-    <p class="t-center">
-        <% out.print(user.getPilot().getCharacterName()); %> was located in <% out.print(request.getSession().getAttribute(CcpEveSsoConfig.DRTTI_EVE_PILOT_LOCATION_KEY)); %> at login.
-    </p>
     <p class="t-center">
       <pre><% out.print(request.getSession().getAttribute(CcpEveSsoConfig.DRTTI_EVE_AUTHENTICATED_PILOT_KEY)); %></pre>
     </p>

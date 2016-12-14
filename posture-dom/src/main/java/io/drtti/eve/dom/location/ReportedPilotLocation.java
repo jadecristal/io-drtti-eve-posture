@@ -14,7 +14,7 @@ import java.time.temporal.ChronoUnit;
  */
 public class ReportedPilotLocation extends PilotLocation implements ExpirableReport {
 
-    private final static int EXPIRATION_POLICY_SECONDS = 600;
+    private final static int EXPIRATION_POLICY_SECONDS = 15;
 
     private Instant reportedTimeStamp;
 

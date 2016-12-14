@@ -13,7 +13,6 @@ body {
     margin: 0.25em;
     position: fixed;
     font-family: 'GFS Didot', 'Tinos', serif;
-    font-size: 3em;
 }
 
 .h-main {
@@ -31,12 +30,14 @@ body {
     left: 0;
     top: 0;
     line-height: 0.5;
+    font-size: 3em;
 }
 
 .o {
     right: 0;
     bottom: 0;
     line-height: 0.75;
+    font-size: 3em;
 }
 
 a.nl {
@@ -47,8 +48,7 @@ a.nl {
 .user {
     right: 0;
     top: 0;
-    margin: .25em;
-    font-size: 1.25em;
+    text-align: right;
 }
 
 .user img {

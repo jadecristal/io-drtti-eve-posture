@@ -1,7 +1,6 @@
 package io.drtti.eve.ejb.util;
 
-import io.drtti.eve.dom.ccp.Pilot;
-import io.drtti.eve.dom.ccp.SolarSystem;
+import io.drtti.eve.dom.location.ReportedPilotLocation;
 import org.apache.log4j.Logger;
 
 import javax.json.*;
@@ -19,28 +18,17 @@ public class DrttiJson {
 
     private final static Logger log = Logger.getLogger(DrttiJson.class);
 
-    public static String DEBUG_pilotSystemJson(Map<Pilot, SolarSystem> pilotSystem) {
+    public static String DEBUG_pilotSystemJson(Set<ReportedPilotLocation> rpl) {
 
+        JsonBuilderFactory jf = Json.createBuilderFactory(null);
         JsonObjectBuilder job = Json.createObjectBuilder();
-        Set<Map.Entry<Pilot,SolarSystem>> ps = pilotSystem.entrySet();
-        ps.stream().forEach(e -> job.add(String.valueOf(e.getKey().getCharacterName()), String.valueOf(e.getValue().getSolarSystemName())));
+
+        rpl.stream().forEach(e -> job.add(String.valueOf(e.getPilot().getCharacterName()), jf.createObjectBuilder()
+                .add("solar_system_name", String.valueOf(e.getSolarSystem().getSolarSystemName()))
+                .add("reported_time", e.getReportedTimeStamp().toString()))
+        );
         return jsonFormat(job.build().toString());
 
-//        StringBuilder sb = new StringBuilder().append("{\n");
-//
-//        for (Pilot p : pilotSystem.keySet()) {
-//            sb.append("{")
-//                    .append("\"pilot_name\":\"").append(p.getCharacterName()).append("\",")
-//                    .append("\"solar_system_name\":\"").append(pilotSystem.get(p).getSolarSystemName()).append("\"}\n");
-//        }
-
-//        for (Map.Entry<Pilot, SolarSystem> psEntry : pilotSystem.entrySet()) {
-//            job.add("pilotLocation", jbf.createObjectBuilder()
-//                    .add("pilot", psEntry.getKey().getCharacterName())
-//                    .add("solar_system", psEntry.getValue().getSolarSystemName()));
-//        }
-//
-//        return jsonFormat(job.build().toString());
     }
 
     public static String jsonFormat(String json) {

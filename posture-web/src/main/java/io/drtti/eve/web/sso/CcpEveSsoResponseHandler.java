@@ -3,8 +3,6 @@ package io.drtti.eve.web.sso;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.drtti.eve.dom.ccp.Pilot;
 import io.drtti.eve.dom.core.DrttiUser;
-import io.drtti.eve.dom.esi.EsiCharacterLocation;
-import io.drtti.eve.dom.esi.EsiSolarSystem;
 import io.drtti.eve.dom.sso.CcpEveSsoAuthenticatedPilot;
 import io.drtti.eve.dom.sso.CcpEveSsoConfig;
 import io.drtti.eve.dom.sso.CcpEveSsoCredential;
@@ -72,11 +70,6 @@ public class CcpEveSsoResponseHandler extends HttpServlet {
                     log.debug("Logged in DrttiUser saved to session as " + CcpEveSsoConfig.DRTTI_USER_KEY);
 
                     // AFTER HERE, USE DRTTI_USER FOR MAKING AUTH CALLS!
-                    EsiCharacterLocation esiCharacterLocation = esiBean.getEsiCharacterLocation(user.getCredential(), user.getPilot().getCharacterId());
-                    EsiSolarSystem esiSolarSystem = esiBean.getEsiSolarSystem(esiCharacterLocation.getSolarSystemId());
-                    request.getSession().setAttribute(CcpEveSsoConfig.DRTTI_EVE_PILOT_LOCATION_KEY, esiSolarSystem.getSolarSystemName());
-                    log.debug("Saved user pilot location solar system name in Session as " + CcpEveSsoConfig.DRTTI_EVE_PILOT_LOCATION_KEY);
-
                     // TODO: Remove after other stuff is on the front page
                     request.getSession().setAttribute(CcpEveSsoConfig.DRTTI_EVE_AUTHENTICATED_PILOT_KEY, DrttiJson.jsonFormat(authenticatedPilotJson));
                     log.debug("Saved authenticated pilot JSON in Session");
@@ -98,28 +91,5 @@ public class CcpEveSsoResponseHandler extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/home.jsp");
         }
     }
-
-//    // TODO: move to a utility class
-//    private String jsonPrettyPrint(String json) {
-//        StringWriter sw = new StringWriter();
-//
-//        try (JsonReader jr = Json.createReader(new StringReader(json))) {
-//            JsonObject jo = jr.readObject();
-//
-//            Map<String, Object> jsonWriterProperties = new HashMap<>(1);
-//            jsonWriterProperties.put(JsonGenerator.PRETTY_PRINTING, true);
-//
-//            JsonWriterFactory jwf = Json.createWriterFactory(jsonWriterProperties);
-//            JsonWriter jw = jwf.createWriter(sw);
-//
-//            jw.writeObject(jo);
-//            jw.close();
-//        } catch (Exception e) {
-//            log.error(e);
-//            return "javax.json PRETTY_PRINTING broke";
-//        }
-//
-//        return sw.toString();
-//    }
 
 }

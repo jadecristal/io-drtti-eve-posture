@@ -1,0 +1,42 @@
+@startuml
+package "API Services" {
+  [ ESI Service ]
+  [ SSO OAuth2 Service ]
+}
+package "Client Services" {
+  [ Client Registration Service ]
+  [ Client Registration Service ] ..> [ SSO OAuth2 Service ]
+}
+
+package "Location Services" {
+  [ Location Monitoring Service ]
+  [ Pilot Location Service ]
+  [ Pilot Location Storage ]
+  [ Location WebSocket Service ] -- HTTPS : pushes updates to\n client browsers as <b>JSON</b>
+  [ Pilot Location Service ] --> [ Pilot Location Storage ]
+  [ Location Monitoring Service ] ..> [ ESI Service ]
+  [ Location Monitoring Service ] --> [ Client Registration Service ] : get registered <b>Pilot</b>s
+  [ Location Monitoring Service ] --> [ Location WebSocket Service ] : sends all client\nlocations as <b>JSON</b>
+  [ Location Monitoring Service ] --> [ Pilot Location Service ] : submits <b>ReportedPilotLocation</b>
+
+  note left of [ Pilot Location Storage ] : In-Memory Storage Only\nExpires old reports using <b>@Scheduled</b>.
+  note left of [ Pilot Location Service ] : Accepts location reports.\nExpires old reported pilot locations\nusing <b>@Scheduled</b>.
+}
+
+cloud "CCP Servers" {
+  [ ESI Endpoint ]
+  [ SSO OAuth2 Endpoint ]
+}
+
+database "MySQL" {
+
+  frame "drtti_eve" {
+    [ Pilot ]
+    [ SolarSystem ]
+  }
+  [ ESI Service ] ..> [ ESI Endpoint ] : uses <b>ESI API</b>
+  [ ESI Service ] ..> [ SolarSystem ] : caches/looksup\nw/<b>JPA</b>
+
+}
+
+@enduml

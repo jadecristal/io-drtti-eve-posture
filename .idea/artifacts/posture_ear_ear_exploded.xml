@@ -31,9 +31,7 @@
           <element id="directory" name="classes">
             <element id="module-output" name="posture-web" />
           </element>
-          <element id="directory" name="lib">
-            <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.5" />
-          </element>
+          <element id="directory" name="lib" />
         </element>
         <element id="directory" name="META-INF">
           <element id="file-copy" path="$PROJECT_DIR$/posture-ear/target/temp/posture-web/META-INF/SKINNY_MANIFEST.MF" output-file-name="MANIFEST.MF" />

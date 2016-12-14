@@ -11,9 +11,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.*;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author cwinebrenner
@@ -78,8 +76,8 @@ public class PilotLocationServiceBean {
     }
 
     // TODO: DEBUG remove this
-    public Map<Pilot, SolarSystem> DEBUG_getPilotSystem() {
-        return pls.DEBUG_getPilotSystem();
+    public Set<ReportedPilotLocation> DEBUG_getPilotSystem() {
+        return Collections.unmodifiableSet(rpls);
     }
 
 }
