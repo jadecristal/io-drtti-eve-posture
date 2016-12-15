@@ -23,7 +23,7 @@ public class PilotLocationServiceBean {
     private final Logger log = Logger.getLogger(this.getClass());
 
     @EJB
-    PilotLocationStorageBean pls;
+    private PilotLocationStorageBean pls;
 
     private Set<ReportedPilotLocation> rpls;
     // TODO: endpoint to receive updates on location?

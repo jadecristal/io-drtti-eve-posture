@@ -22,8 +22,8 @@ public class PilotLocationStorageBean {
 
     private final Logger log = Logger.getLogger(this.getClass());
 
-    private HashMap<SolarSystem, HashSet<Pilot>> systemPilots;
-    private HashMap<Pilot, SolarSystem> pilotSystem;
+    private Map<SolarSystem, HashSet<Pilot>> systemPilots;
+    private Map<Pilot, SolarSystem> pilotSystem;
 
     @PostConstruct
     private void startup() {

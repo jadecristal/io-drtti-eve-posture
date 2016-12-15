@@ -24,9 +24,9 @@ import java.util.List;
 @Stateless
 public class CvaKosPostureService {
 
-    private final static String CVA_KOS_BASE_URI = "http://kos.cva-eve.org/api/";
-    private final static String CVA_KOS_MODE_SINGLE = "?c=json&type=unit&q=";
-    private final static String CVA_KOS_MODE_MULTI = "?c=json&type=multi&q=";
+    private static final String CVA_KOS_BASE_URI = "http://kos.cva-eve.org/api/";
+    private static final String CVA_KOS_MODE_SINGLE = "?c=json&type=unit&q=";
+    private static final String CVA_KOS_MODE_MULTI = "?c=json&type=multi&q=";
 
     private Client cvaKosClient;
     private ObjectMapper cvaKosMapper;

@@ -14,7 +14,7 @@ import java.time.temporal.ChronoUnit;
  */
 public class ReportedPilotLocation extends PilotLocation implements ExpirableReport {
 
-    private final static int EXPIRATION_POLICY_SECONDS = 15;
+    private static final int EXPIRATION_POLICY_SECONDS = 15;
 
     private Instant reportedTimeStamp;
 
@@ -63,16 +63,16 @@ public class ReportedPilotLocation extends PilotLocation implements ExpirableRep
         }
         ReportedPilotLocation rpl = (ReportedPilotLocation) o;
         return new EqualsBuilder()
-                .append(pilot.getCharacterId(), rpl.getPilot().getCharacterId())
-                .append(solarSystem.getSolarSystemId(), rpl.getSolarSystem().getSolarSystemId())
+                .append(this.getPilot().getCharacterId(), rpl.getPilot().getCharacterId())
+                .append(this.getSolarSystem().getSolarSystemId(), rpl.getSolarSystem().getSolarSystemId())
                 .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(637, 249)
-                .append(pilot.getCharacterId())
-                .append(solarSystem.getSolarSystemId())
+                .append(this.getPilot().getCharacterId())
+                .append(this.getSolarSystem().getSolarSystemId())
                 .toHashCode();
     }
 

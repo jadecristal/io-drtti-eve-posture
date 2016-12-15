@@ -20,7 +20,7 @@ import java.io.IOException;
 public class CcpEveSsoLogoutHandler extends HttpServlet {
 
     @EJB
-    DrttiUserRegistrationServiceBean dursBean;
+    private DrttiUserRegistrationServiceBean dursBean;
 
     private final Logger log = Logger.getLogger(this.getClass());
 

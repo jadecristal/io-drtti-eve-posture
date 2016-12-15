@@ -7,7 +7,6 @@ import io.drtti.eve.dom.sso.CcpEveSsoAuthenticatedPilot;
 import io.drtti.eve.dom.sso.CcpEveSsoConfig;
 import io.drtti.eve.dom.sso.CcpEveSsoCredential;
 import io.drtti.eve.ejb.client.DrttiUserRegistrationServiceBean;
-import io.drtti.eve.ejb.esi.CcpEveEsiBean;
 import io.drtti.eve.ejb.sso.CcpEveSsoBean;
 import io.drtti.eve.ejb.util.DrttiJson;
 import org.apache.log4j.Logger;
@@ -30,13 +29,10 @@ public class CcpEveSsoResponseHandler extends HttpServlet {
     private final Logger log = Logger.getLogger(this.getClass());
 
     @EJB
-    CcpEveSsoBean ssoBean;
+    private CcpEveSsoBean ssoBean;
 
     @EJB
-    DrttiUserRegistrationServiceBean dursBean;
-
-    @EJB
-    CcpEveEsiBean esiBean;
+    private DrttiUserRegistrationServiceBean dursBean;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

@@ -7,7 +7,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author cwinebrenner
@@ -16,7 +16,7 @@ import java.util.HashMap;
 @Startup
 public class PilotPostureStorageBean {
 
-    private HashMap<Pilot, Posture> pilotPosture;
+    private Map<Pilot, Posture> pilotPosture;
 
     @PostConstruct
     private void postureStorageStartup() {

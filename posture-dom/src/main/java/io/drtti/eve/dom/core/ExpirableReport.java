@@ -7,8 +7,8 @@ import java.time.Instant;
  */
 public interface ExpirableReport {
 
-    public Instant getReportedTimeStamp();
-    public void setReportedTimeStamp(Instant reportedTimeStamp);
-    public boolean isExpired();
+    Instant getReportedTimeStamp();
+    void setReportedTimeStamp(Instant reportedTimeStamp);
+    boolean isExpired();
 
 }

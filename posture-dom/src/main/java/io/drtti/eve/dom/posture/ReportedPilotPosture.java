@@ -12,7 +12,7 @@ import java.time.temporal.ChronoUnit;
  */
 public class ReportedPilotPosture extends PilotPosture implements ExpirableReport {
 
-    private final static int EXPIRATION_POLICY_SECONDS = 300;
+    private static final int EXPIRATION_POLICY_SECONDS = 300;
 
     private Instant reportedTimeStamp;
 

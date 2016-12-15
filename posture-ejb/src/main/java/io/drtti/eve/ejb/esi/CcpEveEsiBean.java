@@ -23,12 +23,12 @@ public class CcpEveEsiBean {
 
     private final Logger log = Logger.getLogger(this.getClass());
 
-    private final static String ESI_BASE = "https://esi.tech.ccp.is/latest";
+    private static final String ESI_BASE = "https://esi.tech.ccp.is/latest";
 
     private ObjectMapper om;
 
     @EJB
-    SolarSystemBean ssb;
+    private SolarSystemBean ssb;
 
     public CcpEveEsiBean() {
         om = new ObjectMapper();
@@ -37,8 +37,7 @@ public class CcpEveEsiBean {
     public EsiCharacterLocation getEsiCharacterLocation(CcpEveSsoCredential credential, Long characterId) {
         try {
             String esiResponseJson = esiCallAuthenticated(esiLocationEndpointBuilder(characterId), credential);
-            EsiCharacterLocation esiCharacterLocation = om.readValue(esiResponseJson, EsiCharacterLocation.class);
-            return esiCharacterLocation;
+            return om.readValue(esiResponseJson, EsiCharacterLocation.class);
         } catch (IOException ioe) {
             log.error(ioe);
             return null;

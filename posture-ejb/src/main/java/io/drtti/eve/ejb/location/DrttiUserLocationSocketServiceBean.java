@@ -14,21 +14,21 @@ import java.util.*;
 @Singleton
 public class DrttiUserLocationSocketServiceBean {
 
-    private static final Set<Session> userSessions = Collections.synchronizedSet(new HashSet<>());
+    private static final Set<Session> USER_SESSIONS = Collections.synchronizedSet(new HashSet<>());
 
     @OnOpen
     public void onOpen(Session client) {
-        userSessions.add(client);
+        USER_SESSIONS.add(client);
     }
 
     @OnClose
     public void onClose(Session client) {
-        userSessions.remove(client);
+        USER_SESSIONS.remove(client);
     }
 
     @OnMessage
     public void message(String message) throws IOException, EncodeException {
-        for (Session session : userSessions) {
+        for (Session session : USER_SESSIONS) {
             session.getBasicRemote().sendObject(message);
         }
     }

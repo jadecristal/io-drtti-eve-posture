@@ -17,10 +17,10 @@ public class SolarSystemBean {
     // TODO: synchronize JPA beans
     private final Logger log = Logger.getLogger(this.getClass());
 
-    private final static String CCP_EVE_ID_CLASS_FIELD = "solarSystemId";
+    private static final String CCP_EVE_ID_CLASS_FIELD = "solarSystemId";
 
     @PersistenceContext
-    EntityManager em;
+    private EntityManager em;
 
     public SolarSystem getById(Long id) {
         try {

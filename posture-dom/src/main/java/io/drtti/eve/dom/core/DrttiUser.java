@@ -6,9 +6,6 @@ import io.drtti.eve.dom.sso.CcpEveSsoCredential;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import javax.enterprise.context.SessionScoped;
-import javax.inject.Named;
-
 /**
  * @author cwinebrenner
  */

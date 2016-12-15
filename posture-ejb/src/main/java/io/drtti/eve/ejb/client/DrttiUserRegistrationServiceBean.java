@@ -23,7 +23,7 @@ public class DrttiUserRegistrationServiceBean {
     private Logger log = Logger.getLogger(this.getClass());
 
     @EJB
-    CcpEveSsoBean ssoBean;
+    private CcpEveSsoBean ssoBean;
 
     private Set<DrttiUser> users;
 

@@ -10,13 +10,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CcpEveSsoAuthenticatedPilot {
 
     @JsonProperty("CharacterID")
-    Long characterId;
+    private Long characterId;
 
     @JsonProperty("CharacterName")
-    String characterName;
+    private String characterName;
 
     @JsonProperty("CharacterOwnerHash")
-    String characterOwnerHash;
+    private String characterOwnerHash;
 
     public Long getCharacterId() {
         return characterId;
