@@ -45,7 +45,7 @@
         <!-- Specific Tool Versions -->
         <jpa-hibernate-orm-version>5.2.5.Final</jpa-hibernate-orm-version>
         <jax-rs-resteasy-version>3.0.19.Final</jax-rs-resteasy-version>
-        <json-jackson-version>2.8.3</json-jackson-version>
+        <json-jackson-version>[2.9.9.2,)</json-jackson-version>
         <oauth2-apache-oltu-version>1.0.2</oauth2-apache-oltu-version>
         <commons-apache-lang3-version>3.5</commons-apache-lang3-version>
 

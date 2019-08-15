@@ -1,6 +1,12 @@
 <component name="ArtifactManager">
   <artifact type="ejb-jar" name="posture-dom:ejb">
     <output-path>$PROJECT_DIR$/posture-dom/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>posture-dom</module>
+        <packaging>ejb</packaging>
+      </options>
+    </properties>
     <root id="archive" name="posture-dom.jar">
       <element id="artifact" artifact-name="posture-dom:ejb exploded" />
     </root>

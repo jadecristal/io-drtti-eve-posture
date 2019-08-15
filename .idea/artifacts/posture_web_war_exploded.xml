@@ -1,6 +1,13 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="posture-web:war exploded">
     <output-path>$PROJECT_DIR$/posture-web/target/posture-web</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <exploded>true</exploded>
+        <module>posture-web</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
@@ -17,9 +24,9 @@
           <element id="library" level="project" name="Maven: org.apache.logging.log4j:log4j-core:2.7" />
           <element id="library" level="project" name="Maven: org.apache.logging.log4j:log4j-api:2.7" />
           <element id="library" level="project" name="Maven: org.apache.logging.log4j:log4j-1.2-api:2.7" />
-          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.8.3" />
-          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.8.0" />
-          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.8.3" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.10.0.pr1" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.10.0.pr1" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.10.0.pr1" />
           <element id="library" level="project" name="Maven: org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:1.0.2" />
           <element id="library" level="project" name="Maven: org.apache.oltu.oauth2:org.apache.oltu.oauth2.common:1.0.2" />
           <element id="library" level="project" name="Maven: org.json:json:20140107" />

@@ -1,6 +1,13 @@
 <component name="ArtifactManager">
   <artifact type="exploded-ejb" name="posture-ejb:ejb exploded">
     <output-path>$PROJECT_DIR$/posture-ejb/target/posture-ejb</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <exploded>true</exploded>
+        <module>posture-ejb</module>
+        <packaging>ejb</packaging>
+      </options>
+    </properties>
     <root id="root">
       <element id="javaee-facet-resources" facet="posture-ejb/ejb/EJB" />
       <element id="directory" name="META-INF">

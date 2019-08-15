@@ -1,6 +1,12 @@
 <component name="ArtifactManager">
   <artifact type="ear" name="posture-ear:ear">
     <output-path>$PROJECT_DIR$/posture-ear/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>posture-ear</module>
+        <packaging>ear</packaging>
+      </options>
+    </properties>
     <root id="archive" name="io.drtti.eve-posture.ear">
       <element id="artifact" artifact-name="posture-ear:ear exploded" />
     </root>

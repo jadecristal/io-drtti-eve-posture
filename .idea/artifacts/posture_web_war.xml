@@ -1,6 +1,12 @@
 <component name="ArtifactManager">
   <artifact type="war" name="posture-web:war">
     <output-path>$PROJECT_DIR$/posture-web/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>posture-web</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
     <root id="archive" name="posture-web.war">
       <element id="artifact" artifact-name="posture-web:war exploded" />
     </root>
